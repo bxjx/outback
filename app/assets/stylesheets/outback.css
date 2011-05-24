@@ -1,5 +1,5 @@
 body .ui-page{
-  background: white url(http://jsadvantage.com.au/images/content-bg.gif) 50% 96px repeat-x !important;
+  background: white url(/assets/content-bg.gif) 50% 96px repeat-x !important;
 }
 h1{
   margin 0 0 10px;

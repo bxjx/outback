@@ -3,11 +3,20 @@ Outback::Application.routes.draw do
   # first created -> highest priority.
 
   root :to => 'outback#index'
-  map.manifest_outback '/outback/manifest', :controller => 'outback', :action => 'manifest'
-  map.namespace(:api) do |api|
-    api.namespace(:v1) do |v1|
-      v1.resources :users, :collection => {:auth => [:get, :post]}
-      v1.resources :clients, :collection => {:caseload => :get}
+  match '/outback/manifest', {:controller => 'outback', :action =>'manifest'}
+  namespace :api do
+    namespace :v1 do
+      resources :users do
+       collection do
+          get 'auth'
+          post 'auth'
+        end
+      end
+      resources :clients do
+        collection do
+          get 'caseload'
+        end
+      end
     end
   end
 
