@@ -70,6 +70,7 @@ class OutbackView extends Backbone.View
   redirectTo: (page) ->
     $.mobile.changePage page
 
+  # generic dialog
   announce: (message) ->
     $.mobile.pageLoading(true)
     # stole the ajax error from jquery mobile. hmm.. might replace with confirm
