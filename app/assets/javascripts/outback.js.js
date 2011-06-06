@@ -1,5 +1,5 @@
 (function() {
-  var HomeView, LoginView, OutbackController, OutbackView, SyncView, User, UserCollection;
+  var Client, ClientCollection, HomeView, LoginView, OutbackController, OutbackView, SyncView, User, UserCollection;
   var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
     for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
     function ctor() { this.constructor = child; }
@@ -52,6 +52,35 @@
     return UserCollection;
   })();
   this.Users = new UserCollection;
+  Client = (function() {
+    __extends(Client, Backbone.Model);
+    function Client() {
+      Client.__super__.constructor.apply(this, arguments);
+    }
+    Client.prototype.special = false;
+    return Client;
+  })();
+  ClientCollection = (function() {
+    __extends(ClientCollection, Backbone.Collection);
+    function ClientCollection() {
+      ClientCollection.__super__.constructor.apply(this, arguments);
+    }
+    ClientCollection.prototype.localStorage = new Store("clients");
+    ClientCollection.prototype.url = function() {
+      console.log("url called");
+      return '/api/v1/clients/caseload?token=0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21';
+    };
+    ClientCollection.prototype.model = Client;
+    ClientCollection.prototype.bridgeSync = function(token) {
+      console.log("bridgeSync called");
+      this.fetch();
+      return this.forEach(function() {
+        return this.save;
+      });
+    };
+    return ClientCollection;
+  })();
+  this.Clients = new ClientCollection;
   OutbackView = (function() {
     __extends(OutbackView, Backbone.View);
     function OutbackView() {
@@ -144,7 +173,7 @@
     function HomeView() {
       this.render = __bind(this.render, this);      HomeView.__super__.constructor.apply(this, arguments);
       this.el = this.activePage();
-      this.template = _.template('<ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">\n  <li data-role="list-divider">Sync</li> <li><a href="#sync">Sync with Bridge</a></li>\n  <li><a href="#login">Login</a></li>\n</ul>');
+      this.template = _.template('<ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">\n  <li data-role="list-divider">Caseload</li>\n  <li><a href="#caseload">Caseload</a></li>\n  <li data-role="list-divider">Account and Sync</li> <li><a href="#sync">Sync with Bridge</a></li>\n  <li><a href="#login">Login</a></li>\n</ul>');
       this.render();
     }
     HomeView.prototype.render = function() {

@@ -24,6 +24,7 @@ _.extend(Store.prototype, {
 
   // Save the current state of the **Store** to *localStorage*.
   save: function() {
+    console.log('saving' + this.name + ' with ' + this.records.join(','));
     localStorage.setItem(this.name, this.records.join(","));
   },
 

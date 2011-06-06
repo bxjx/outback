@@ -49,6 +49,24 @@ class UserCollection extends Backbone.Collection
 
 this.Users = new UserCollection
 
+
+class Client extends Backbone.Model
+  special: false
+
+class ClientCollection extends Backbone.Collection
+  localStorage: new Store("clients"),
+  url: ->
+    console.log("url called")
+    '/api/v1/clients/caseload?token=0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21'
+  model: Client
+  bridgeSync: (token) ->
+    console.log("bridgeSync called")
+    @fetch()
+    @forEach -> @save
+
+this.Clients = new ClientCollection
+
+
 # ## Views
 
 # Super class for outback views with various jquery mobile helpers
@@ -148,7 +166,9 @@ class HomeView extends OutbackView
     @el = @activePage()
     @template = _.template('''
     <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
-      <li data-role="list-divider">Sync</li> <li><a href="#sync">Sync with Bridge</a></li>
+      <li data-role="list-divider">Caseload</li>
+      <li><a href="#caseload">Caseload</a></li>
+      <li data-role="list-divider">Account and Sync</li> <li><a href="#sync">Sync with Bridge</a></li>
       <li><a href="#login">Login</a></li>
     </ul>
     ''')

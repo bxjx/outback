@@ -3,6 +3,7 @@ class Api::V1::ClientsController < ApplicationController
 
   def caseload
     render :json => [
+      fake_client
     ]
   end
 
@@ -15,6 +16,6 @@ class Api::V1::ClientsController < ApplicationController
   end
 
   def fake_client
-    {:first_name => 'Julian', :last_name => 'Assange'}
+    {:first_name => 'Julian', :last_name => 'Assange', :id => 1}
   end
 end
