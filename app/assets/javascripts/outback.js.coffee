@@ -190,12 +190,29 @@ class HomeView extends OutbackView
     @el.find('.ui-content').html(@template())
     @reapplyStyles(@el)  
 
+class CaseloadView extends OutbackView
+  constructor: ->
+    super
+    @el = @activePage()
+    @template = _.template('''
+		<ul data-role="listview" data-filter="true">
+      <% clients.each(function(client){ %>
+			<li><a href="#client-<%=client.id %>"><%=client.get('first_name') + " " + client.get('last_name') %></a></li>
+      <% }); %>
+    </ul>
+    ''')
+    @render()
+  render: =>
+    @el.find('.ui-content').html(@template({clients: Clients}))
+    @reapplyStyles(@el)  
+
 # ## Controllers
 class OutbackController extends Backbone.Controller
   routes :
     "home"  : "home"
     "sync"  : "sync"
     "login"  : "login"
+    "caseload"  : "caseload"
   constructor: ->
     super
     @_views = {}
@@ -205,11 +222,14 @@ class OutbackController extends Backbone.Controller
     @_views['sync'] ||= new SyncView
   login : ->
     @_views['login'] ||= new LoginView
+  caseload : ->
+    @_views['caseload'] ||= new CaseloadView
 
 
 # Start the app
 $(document).ready ->
   outbackController = new OutbackController
   # controller must be instantiated before history can be started
-  Backbone.history.start()
-  outbackController.home()
+  Clients.fetch success: ->
+    Backbone.history.start()
+    outbackController.home()

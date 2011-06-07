@@ -1,10 +1,9 @@
+require 'faker'
 class Api::V1::ClientsController < ApplicationController
   before_filter :check_token
 
   def caseload
-    render :json => [
-      fake_client
-    ]
+    render :json => (1..rand(20)).map{|i| fake_client(i)}
   end
 
   protected
@@ -15,7 +14,7 @@ class Api::V1::ClientsController < ApplicationController
     end
   end
 
-  def fake_client
-    {:first_name => 'Julian', :last_name => 'Assange', :id => 1}
+  def fake_client(id)
+    {:first_name => Faker::Name.first_name, :last_name => Faker::Name.last_name, :id => id}
   end
 end

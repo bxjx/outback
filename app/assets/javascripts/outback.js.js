@@ -1,5 +1,5 @@
 (function() {
-  var Client, ClientCollection, HomeView, LoginView, OutbackController, OutbackView, SyncView, User, UserCollection;
+  var CaseloadView, Client, ClientCollection, HomeView, LoginView, OutbackController, OutbackView, SyncView, User, UserCollection;
   var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
     for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
     function ctor() { this.constructor = child; }
@@ -211,12 +211,29 @@
     };
     return HomeView;
   })();
+  CaseloadView = (function() {
+    __extends(CaseloadView, OutbackView);
+    function CaseloadView() {
+      this.render = __bind(this.render, this);      CaseloadView.__super__.constructor.apply(this, arguments);
+      this.el = this.activePage();
+      this.template = _.template('<ul data-role="listview" data-filter="true">\n      <% clients.each(function(client){ %>\n	<li><a href="#client-<%=client.id %>"><%=client.get(\'first_name\') + " " + client.get(\'last_name\') %></a></li>\n      <% }); %>\n    </ul>');
+      this.render();
+    }
+    CaseloadView.prototype.render = function() {
+      this.el.find('.ui-content').html(this.template({
+        clients: Clients
+      }));
+      return this.reapplyStyles(this.el);
+    };
+    return CaseloadView;
+  })();
   OutbackController = (function() {
     __extends(OutbackController, Backbone.Controller);
     OutbackController.prototype.routes = {
       "home": "home",
       "sync": "sync",
-      "login": "login"
+      "login": "login",
+      "caseload": "caseload"
     };
     function OutbackController() {
       OutbackController.__super__.constructor.apply(this, arguments);
@@ -234,12 +251,20 @@
       var _base;
       return (_base = this._views)['login'] || (_base['login'] = new LoginView);
     };
+    OutbackController.prototype.caseload = function() {
+      var _base;
+      return (_base = this._views)['caseload'] || (_base['caseload'] = new CaseloadView);
+    };
     return OutbackController;
   })();
   $(document).ready(function() {
     var outbackController;
     outbackController = new OutbackController;
-    Backbone.history.start();
-    return outbackController.home();
+    return Clients.fetch({
+      success: function() {
+        Backbone.history.start();
+        return outbackController.home();
+      }
+    });
   });
 }).call(this);
