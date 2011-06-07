@@ -56,7 +56,7 @@ class ClientCollection extends Backbone.Collection
   localStorage: new Store("clients")
   sync: Backbone.localSync
   url: ->
-    '/api/v1/clients/caseload?token=0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21'
+    '/api/v1/clients/caseload.json?token=0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21'
   model: Client
   bridgeSync: (token, options = {}) ->
     @sync = Backbone.sync
@@ -74,7 +74,7 @@ class ClientCollection extends Backbone.Collection
                 callback(error)
             model.save null, save_callbacks
         async.parallel chainedSaves, ->
-          #options.success() if options.success
+          options.success() if options.success
       error: => 
         @sync = Backbone.localSync
     @fetch(callbacks)
@@ -211,5 +211,5 @@ class OutbackController extends Backbone.Controller
 $(document).ready ->
   outbackController = new OutbackController
   # controller must be instantiated before history can be started
-  #Backbone.history.start()
+  Backbone.history.start()
   outbackController.home()

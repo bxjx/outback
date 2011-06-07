@@ -8,7 +8,7 @@ describe "Client collection", ->
       @server = sinon.fakeServer.create()
       @server.respondWith(
         "GET",
-        "/api/v1/clients/caseload?token=0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21",
+        "/api/v1/clients/caseload.json?token=0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21",
         @validResponse(@fixture)
       );
 
@@ -19,7 +19,7 @@ describe "Client collection", ->
       Clients.bridgeSync()
       expect(@server.requests.length).toEqual(1)
       expect(@server.requests[0].method).toEqual("GET")
-      expect(@server.requests[0].url).toEqual("/api/v1/clients/caseload?token=0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21")
+      expect(@server.requests[0].url).toEqual("/api/v1/clients/caseload.json?token=0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21")
     
     it "should create client models for each client on the caseload", ->
       Clients.bridgeSync('valid')

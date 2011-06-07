@@ -68,7 +68,7 @@
     ClientCollection.prototype.localStorage = new Store("clients");
     ClientCollection.prototype.sync = Backbone.localSync;
     ClientCollection.prototype.url = function() {
-      return '/api/v1/clients/caseload?token=0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21';
+      return '/api/v1/clients/caseload.json?token=0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21';
     };
     ClientCollection.prototype.model = Client;
     ClientCollection.prototype.bridgeSync = function(token, options) {
@@ -96,7 +96,11 @@
               return model.save(null, save_callbacks);
             };
           });
-          return async.parallel(chainedSaves, function() {});
+          return async.parallel(chainedSaves, function() {
+            if (options.success) {
+              return options.success();
+            }
+          });
         }, this),
         error: __bind(function() {
           return this.sync = Backbone.localSync;
@@ -235,6 +239,7 @@
   $(document).ready(function() {
     var outbackController;
     outbackController = new OutbackController;
+    Backbone.history.start();
     return outbackController.home();
   });
 }).call(this);
