@@ -1,4 +1,8 @@
 beforeEach(function() {
+
+  this.clearLocalStore = function(){
+    localStorage.clear();
+  };
   
   this.validResponse = function(responseText) {
     return [

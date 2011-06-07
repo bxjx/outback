@@ -16,9 +16,10 @@ src_files:
   - spec/javascripts/support/sinon-1.0.0.js
   - spec/javascripts/support/jasmine-jquery.js
   - vendor/assets/javascripts/underscore-min.js
+  - vendor/assets/javascripts/async.js
   - vendor/assets/javascripts/backbone.js
   - vendor/assets/javascripts/jquery.mobile-1.0a4.1.js
-  - vendor/assets/javascripts/backbone.localStorage.js
+  - vendor/assets/javascripts/backbone-localstorage.js
   - app/assets/javascripts/outback.js.js
   - spec/javascripts/fixtures/*.fixture.js
   - spec/javascripts/templates/*.js

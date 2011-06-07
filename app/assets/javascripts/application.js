@@ -6,7 +6,8 @@
 //
 //= require jquery
 //= require underscore-min
+//= require async
 //= require jquery.mobile-1.0a4.1
 //= require backbone
-//= require backbone.localStorage
+//= require backbone-localstorage
 //= require_tree .

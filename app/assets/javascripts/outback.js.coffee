@@ -49,23 +49,37 @@ class UserCollection extends Backbone.Collection
 
 this.Users = new UserCollection
 
-
 class Client extends Backbone.Model
-  special: false
+  sync: Backbone.localSync
 
 class ClientCollection extends Backbone.Collection
-  localStorage: new Store("clients"),
+  localStorage: new Store("clients")
+  sync: Backbone.localSync
   url: ->
-    console.log("url called")
     '/api/v1/clients/caseload?token=0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21'
   model: Client
-  bridgeSync: (token) ->
-    console.log("bridgeSync called")
-    @fetch()
-    @forEach -> @save
+  bridgeSync: (token, options = {}) ->
+    @sync = Backbone.sync
+    callbacks =
+      success: => 
+        models = @models
+        @sync = Backbone.localSync
+        chainedSaves =  @map (model) ->
+          # return a callback to be used by parallel
+          (callback) -> 
+            save_callbacks =
+              success: ->
+                callback(null, model.id)
+              error: (error) ->
+                callback(error)
+            model.save null, save_callbacks
+        async.parallel chainedSaves, ->
+          #options.success() if options.success
+      error: => 
+        @sync = Backbone.localSync
+    @fetch(callbacks)
 
 this.Clients = new ClientCollection
-
 
 # ## Views
 
@@ -146,7 +160,6 @@ class LoginView extends OutbackView
     "submit form" : "onSubmit"
   }
   render: ->
-    console.log("render!")
     @el.find('h1').html('Login')
     @el.find('.ui-content').html(@template())
     @reapplyStyles(@el)  
@@ -198,5 +211,5 @@ class OutbackController extends Backbone.Controller
 $(document).ready ->
   outbackController = new OutbackController
   # controller must be instantiated before history can be started
-  Backbone.history.start()
+  #Backbone.history.start()
   outbackController.home()

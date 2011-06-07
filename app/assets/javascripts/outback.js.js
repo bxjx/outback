@@ -57,7 +57,7 @@
     function Client() {
       Client.__super__.constructor.apply(this, arguments);
     }
-    Client.prototype.special = false;
+    Client.prototype.sync = Backbone.localSync;
     return Client;
   })();
   ClientCollection = (function() {
@@ -66,17 +66,43 @@
       ClientCollection.__super__.constructor.apply(this, arguments);
     }
     ClientCollection.prototype.localStorage = new Store("clients");
+    ClientCollection.prototype.sync = Backbone.localSync;
     ClientCollection.prototype.url = function() {
-      console.log("url called");
       return '/api/v1/clients/caseload?token=0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21';
     };
     ClientCollection.prototype.model = Client;
-    ClientCollection.prototype.bridgeSync = function(token) {
-      console.log("bridgeSync called");
-      this.fetch();
-      return this.forEach(function() {
-        return this.save;
-      });
+    ClientCollection.prototype.bridgeSync = function(token, options) {
+      var callbacks;
+      if (options == null) {
+        options = {};
+      }
+      this.sync = Backbone.sync;
+      callbacks = {
+        success: __bind(function() {
+          var chainedSaves, models;
+          models = this.models;
+          this.sync = Backbone.localSync;
+          chainedSaves = this.map(function(model) {
+            return function(callback) {
+              var save_callbacks;
+              save_callbacks = {
+                success: function() {
+                  return callback(null, model.id);
+                },
+                error: function(error) {
+                  return callback(error);
+                }
+              };
+              return model.save(null, save_callbacks);
+            };
+          });
+          return async.parallel(chainedSaves, function() {});
+        }, this),
+        error: __bind(function() {
+          return this.sync = Backbone.localSync;
+        }, this)
+      };
+      return this.fetch(callbacks);
     };
     return ClientCollection;
   })();
@@ -154,7 +180,6 @@
       "submit form": "onSubmit"
     };
     LoginView.prototype.render = function() {
-      console.log("render!");
       this.el.find('h1').html('Login');
       this.el.find('.ui-content').html(this.template());
       this.reapplyStyles(this.el);
@@ -210,7 +235,6 @@
   $(document).ready(function() {
     var outbackController;
     outbackController = new OutbackController;
-    Backbone.history.start();
     return outbackController.home();
   });
 }).call(this);

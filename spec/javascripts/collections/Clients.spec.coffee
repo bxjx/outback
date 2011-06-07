@@ -3,6 +3,7 @@ describe "Client collection", ->
   describe "When synchronising caseload with bridge with a valid token", ->   
 
     beforeEach ->
+      @clearLocalStore()
       @fixture = @fixtures.Clients.valid
       @server = sinon.fakeServer.create()
       @server.respondWith(
@@ -22,7 +23,12 @@ describe "Client collection", ->
     
     it "should create client models for each client on the caseload", ->
       Clients.bridgeSync('valid')
-      console.log(@server.requests[0])
       @server.respond()
       expect(Clients.length).toEqual(@fixture.length)
       expect(Clients.get(1).get('first_name')).toEqual(@fixture[0].first_name)
+
+    it "should put them into the localstore", ->
+      Clients.bridgeSync('valid')
+      @server.respond()
+      storedClients = JSON.parse(localStorage.getItem('clients'))
+      expect(_.values(storedClients).length).toEqual(@fixture.length)

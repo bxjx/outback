@@ -14,61 +14,57 @@ function guid() {
 
 // Our Store is represented by a single JS object in *localStorage*. Create it
 // with a meaningful name, like the name you'd give a table.
-window.Store = function(name) {
+var Store = function(name) {
   this.name = name;
   var store = localStorage.getItem(this.name);
-  this.records = (store && store.split(",")) || [];
+  this.data = (store && JSON.parse(store)) || {};
 };
 
 _.extend(Store.prototype, {
 
   // Save the current state of the **Store** to *localStorage*.
   save: function() {
-    console.log('saving' + this.name + ' with ' + this.records.join(','));
-    localStorage.setItem(this.name, this.records.join(","));
+    localStorage.setItem(this.name, JSON.stringify(this.data));
   },
 
   // Add a model, giving it a (hopefully)-unique GUID, if it doesn't already
   // have an id of it's own.
   create: function(model) {
     if (!model.id) model.id = model.attributes.id = guid();
-    localStorage.setItem(this.name+"-"+model.id, JSON.stringify(model));
-    this.records.push(model.id.toString());
+    this.data[model.id] = model;
     this.save();
     return model;
   },
 
   // Update a model by replacing its copy in `this.data`.
   update: function(model) {
-    localStorage.setItem(this.name+"-"+model.id, JSON.stringify(model));
-    if (!_.include(this.records, model.id.toString())) this.records.push(model.id.toString()); this.save();
+    this.data[model.id] = model;
+    this.save();
     return model;
   },
 
   // Retrieve a model from `this.data` by id.
   find: function(model) {
-    return JSON.parse(localStorage.getItem(this.name+"-"+model.id));
+    return this.data[model.id];
   },
 
   // Return the array of all models currently in storage.
   findAll: function() {
-    return _.map(this.records, function(id){return JSON.parse(localStorage.getItem(this.name+"-"+id))}, this);
+    return _.values(this.data);
   },
 
   // Delete a model from `this.data`, returning it.
   destroy: function(model) {
-    localStorage.removeItem(this.name+"-"+model.id);
-    this.records = _.reject(this.records, function(record_id){return record_id == model.id.toString();});
+    delete this.data[model.id];
     this.save();
     return model;
   }
 
 });
 
-// Create a `Backbone.localSync` to use delegate to the model or collection's
-// We can then set MyBackBoneModel.sync = Backbone.localSync to use local storage with that model
+// Override `Backbone.sync` to use delegate to the model or collection's
 // *localStorage* property, which should be an instance of `Store`.
-Backbone.localSync = function(method, model, options) {
+Backbone.localSync = function(method, model, success, error) {
 
   var resp;
   var store = model.localStorage || model.collection.localStorage;
@@ -81,8 +77,8 @@ Backbone.localSync = function(method, model, options) {
   }
 
   if (resp) {
-    options.success(resp);
+    success(resp);
   } else {
-    options.error("Record not found");
+    error("Record not found");
   }
 };
