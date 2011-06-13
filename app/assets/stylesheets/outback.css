@@ -5,3 +5,20 @@ h1{
   margin 0 0 10px;
   text-align: center;
 }
+.status{
+  position: absolute;
+  background-repeat: no-repeat;
+  left: 250px;
+}
+.complete{
+  background-position: -252px 50%;
+}
+.loading{
+  -webkit-transform: rotate(360deg);
+  -webkit-animation-name: spin;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-iteration-count: infinite;
+}
+#sync-status{
+  margin-top: 15px;
+}

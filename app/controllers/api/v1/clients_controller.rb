@@ -3,6 +3,7 @@ class Api::V1::ClientsController < ApplicationController
   before_filter :check_token
 
   def caseload
+    sleep(rand(4) + 4)
     render :json => (1..rand(20)).map{|i| fake_client(i)}
   end
 
@@ -15,6 +16,19 @@ class Api::V1::ClientsController < ApplicationController
   end
 
   def fake_client(id)
-    {:first_name => Faker::Name.first_name, :last_name => Faker::Name.last_name, :id => id}
+    {
+      :id => id,
+      :first_name => Faker::Name.first_name,
+      :last_name => Faker::Name.last_name,
+      :jsid => rand(10000000),
+      :preferred_name => [Faker::Name.first_name, nil, nil].rand,
+      :phone_home => "0280909001",
+      :phone_mobile => ('04%08d' % rand(100000000)),
+      :preferred_phone => "0280909000",
+      :preferred_email => 'info@jnsolutions.com.au',
+      :email => Faker::Internet.free_email,
+      :crn => rand(100)
+    }
   end
 end
+

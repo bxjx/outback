@@ -2494,15 +2494,18 @@ $.widget( "mobile.page", $.mobile.widget, {
        *
        */
       if(to.length == 0){ // Page could not be found
-          //#console.log("Routing to " + url + "...");
-
-          //to = $('#dynamic_content').html("<div data-role='page' id='" + url + "'><div data-role='content'><img src='images/ajax-loader.png' /></div></div>");
-          to = $("<div data-role='page' id='" + url + "' data-theme='c'>" +
-              '<div data-role="header" data-theme="b">' +
-              '<h1>&nbsp;</h1>' +
-              '</div>' +
-              "<div data-role='content'></div></div>").appendTo('body')
-
+          console.log("Routing to " + url + "...");
+          if ($('#' + url).length){
+            to = $('#' + url)
+          }else{
+            var pageType = url == "login" ? 'dialog' : 'page';
+            to = $("<div data-role='" + pageType + "' id='" + url + "' data-theme='b'>" +
+                '<div data-role="header" data-theme="b">' +
+                '<h1>&nbsp;</h1>' +
+                '</div>' +
+                "<div data-role='content'></div></div>").appendTo('body');
+            console.log("appended...");
+          }
           enhancePage();
         }
         

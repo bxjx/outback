@@ -6,6 +6,7 @@
 //
 //= require jquery
 //= require underscore-min
+//= require jquery.timeago
 //= require async
 //= require jquery.mobile-1.0a4.1
 //= require backbone

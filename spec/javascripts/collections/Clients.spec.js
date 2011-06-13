@@ -2,10 +2,15 @@
   describe("Client collection", function() {
     return describe("When synchronising caseload with bridge with a valid token", function() {
       beforeEach(function() {
+        this.token = '0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21';
+        Users.currentUser = new Users.model({
+          token: this.token
+        });
+        console.log(Users.currentUser);
         this.clearLocalStore();
         this.fixture = this.fixtures.Clients.valid;
         this.server = sinon.fakeServer.create();
-        return this.server.respondWith("GET", "/api/v1/clients/caseload.json?token=0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21", this.validResponse(this.fixture));
+        return this.server.respondWith("GET", "/api/v1/clients/caseload.json?token=" + this.token, this.validResponse(this.fixture));
       });
       afterEach(function() {
         return this.server.restore();
@@ -14,7 +19,7 @@
         Clients.bridgeSync();
         expect(this.server.requests.length).toEqual(1);
         expect(this.server.requests[0].method).toEqual("GET");
-        return expect(this.server.requests[0].url).toEqual("/api/v1/clients/caseload.json?token=0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21");
+        return expect(this.server.requests[0].url).toEqual("/api/v1/clients/caseload.json?token=" + token);
       });
       it("should create client models for each client on the caseload", function() {
         Clients.bridgeSync('valid');

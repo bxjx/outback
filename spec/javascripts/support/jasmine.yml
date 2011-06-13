@@ -18,6 +18,7 @@ src_files:
   - vendor/assets/javascripts/underscore-min.js
   - vendor/assets/javascripts/async.js
   - vendor/assets/javascripts/backbone.js
+  - vendor/assets/javascripts/jquery.timeago.js
   - vendor/assets/javascripts/jquery.mobile-1.0a4.1.js
   - vendor/assets/javascripts/backbone-localstorage.js
   - app/assets/javascripts/outback.js.js
