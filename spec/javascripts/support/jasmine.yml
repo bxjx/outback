@@ -21,7 +21,9 @@ src_files:
   - vendor/assets/javascripts/jquery.timeago.js
   - vendor/assets/javascripts/jquery.mobile-1.0a4.1.js
   - vendor/assets/javascripts/backbone-localstorage.js
-  - app/assets/javascripts/outback.js.js
+  - app/assets/javascripts/models/**/*.js
+  - app/assets/javascripts/views/**/*.js
+  - app/assets/javascripts/controllers/**/*.js
   - spec/javascripts/fixtures/*.fixture.js
   - spec/javascripts/templates/*.js
 

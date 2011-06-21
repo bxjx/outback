@@ -1,5 +1,5 @@
 (function() {
-  describe("Client collection", function() {
+  describe("Clients collection", function() {
     return describe("When synchronising caseload with bridge with a valid token", function() {
       beforeEach(function() {
         this.token = '0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21';
@@ -19,7 +19,7 @@
         Clients.bridgeSync();
         expect(this.server.requests.length).toEqual(1);
         expect(this.server.requests[0].method).toEqual("GET");
-        return expect(this.server.requests[0].url).toEqual("/api/v1/clients/caseload.json?token=" + token);
+        return expect(this.server.requests[0].url).toEqual("/api/v1/clients/caseload.json?token=" + this.token);
       });
       it("should create client models for each client on the caseload", function() {
         Clients.bridgeSync('valid');

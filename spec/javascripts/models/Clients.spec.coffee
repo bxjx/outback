@@ -1,4 +1,4 @@
-describe "Client collection", ->
+describe "Clients collection", ->
   
   describe "When synchronising caseload with bridge with a valid token", ->
 
@@ -22,7 +22,7 @@ describe "Client collection", ->
       Clients.bridgeSync()
       expect(@server.requests.length).toEqual(1)
       expect(@server.requests[0].method).toEqual("GET")
-      expect(@server.requests[0].url).toEqual("/api/v1/clients/caseload.json?token=#{token}")
+      expect(@server.requests[0].url).toEqual("/api/v1/clients/caseload.json?token=#{@token}")
     
     it "should create client models for each client on the caseload", ->
       Clients.bridgeSync('valid')
