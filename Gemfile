@@ -15,6 +15,7 @@ gem 'haml'
 
 gem 'jquery-rails'
 gem 'jasmine'
+gem 'uglifier'
 
 # Use unicorn as the web server
 # gem 'unicorn'

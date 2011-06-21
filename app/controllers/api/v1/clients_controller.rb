@@ -3,7 +3,6 @@ class Api::V1::ClientsController < ApplicationController
   before_filter :check_token
 
   def caseload
-    sleep(rand(4) + 4)
     render :json => (1..rand(20)).map{|i| fake_client(i)}
   end
 

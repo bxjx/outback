@@ -1,6 +1,5 @@
 class Api::V1::UsersController < ApplicationController
   def auth
-    sleep(rand(4) + 4)
     if params[:login] == 'jn0000' && params[:password] == 'outback'
       render :json => {'login' => 'jn0000', 'name' => 'Demo User', 'token' => '0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21'}
     else

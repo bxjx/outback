@@ -1,14 +1,11 @@
 # ### Outback: servicing job seekers in remote communities
-# 
-# Outback allows users to work in remote environments where internet
-# connections are poor or non-existant. It does this by syncing data from the
-# Bridge API (v1) and then allowing the user to access this data offline.
 #
 # Outback currently supports the following:
 # 
 # * authentication with Bridge
 # * syncing the caseload
 # * displaying contact details while offline
+# * 
 #
 # Planned features:
 #
@@ -25,6 +22,15 @@
 # * handling errors during sync
 # * refactor syncing events
 # * pressing the cancel button at any time during sync
+# * store bridge credentials locally? - no force everytime
+# * reformat last sync
+#   * show last successful and possible last unsuccessful sync
+# * break js up in classes + namespace
+# * sync class
+#   * manages the model side and emits events?
+#   * stores the current state of they sync in localstore
+#   * aborts ajax
+# * move templates 
 
 # ## Models
 class User extends Backbone.Model
@@ -154,7 +160,7 @@ class SyncView extends OutbackView
       
       <% if (Users.currentUser && Users.currentUser.lastSyncStarted){ %>
         <ul id="sync-status" data-role="listview">
-          <li id="sync_step_authenticate">Authenticate with Bridge <span class="ui-icon status complete"></status></li>
+          <li id="sync_step_authenticate">Authenticate with Bridge <span id="error-info"></span><span class="ui-icon status complete"></status></li>
           <li id="sync_step_caseload">Sync Caseload<span class="ui-icon status <%= Users.currentUser.lastSync ? 'complete' : 'loading'%>"></status></li>
           <% if (Users.currentUser && Users.currentUser.lastSyncStatus){ %>
           <li>Last sync successfully completed <abbrev class="timeago" title="<%=this.isoDate(Users.currentUser.lastSync)%>"></abbrev</li>
@@ -167,7 +173,19 @@ class SyncView extends OutbackView
       @render()
     Clients.bind 'clients:synced', =>
       @render()
+      @announce("Sync successfull completed")
+    Users.bind 'auth:unauthorised', =>
+      @authStepFailed('unauthorised')
+    Users.bind 'auth:timeout', =>
+      @authStepFailed('timeout')
+    Users.bind 'auth:error:bridge', =>
+      @authStepFailed('server error')
+    Users.bind 'auth:error', =>
+      @authStepFailed('error')
     @render()
+  authStepFailed: (message) ->
+    $('#sync_step_authenticate').removeClass('complete').addClass('failed')
+    $('#sync_step_authenticate #error-info').text("Error: #{message}")
   render: =>
     @el = $('#sync')
     @el.find('h1').html('Sync with Bridge')
