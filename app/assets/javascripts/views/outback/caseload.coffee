@@ -13,3 +13,5 @@ class CaseloadView extends OutbackView
     @el = @activePage()
     @el.find('.ui-content').html(@template({clients: Clients}))
     @reapplyStyles(@el)
+
+this.CaseloadView = CaseloadView

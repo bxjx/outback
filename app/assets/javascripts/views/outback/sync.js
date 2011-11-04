@@ -48,4 +48,5 @@
     };
     return SyncView;
   })();
+  this.SyncView = SyncView;
 }).call(this);

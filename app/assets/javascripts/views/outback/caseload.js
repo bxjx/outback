@@ -24,4 +24,5 @@
     };
     return CaseloadView;
   })();
+  this.CaseloadView = CaseloadView;
 }).call(this);

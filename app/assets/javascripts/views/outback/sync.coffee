@@ -43,3 +43,5 @@ class SyncView extends OutbackView
     @el.find('.ui-content').html(@template())
     $("abbrev.timeago").timeago()
     @reapplyStyles(@el)
+
+this.SyncView = SyncView

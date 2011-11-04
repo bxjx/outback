@@ -13,3 +13,5 @@ class HomeView extends OutbackView
     @el = @activePage()
     @el.find('.ui-content').html(@template())
     @reapplyStyles(@el)
+
+this.HomeView = HomeView

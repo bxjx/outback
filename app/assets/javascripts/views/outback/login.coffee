@@ -50,3 +50,5 @@ class LoginView extends OutbackView
     )
     e.preventDefault()
     e.stopPropagation()
+
+this.LoginView = LoginView

@@ -48,4 +48,5 @@
     };
     return LoginView;
   })();
+  this.LoginView = LoginView;
 }).call(this);

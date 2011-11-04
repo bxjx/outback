@@ -22,4 +22,5 @@
     };
     return HomeView;
   })();
+  this.HomeView = HomeView;
 }).call(this);

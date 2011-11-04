@@ -18,3 +18,5 @@ class ClientView extends OutbackView
     @el = @activePage()
     @el.find('.ui-content').html(@template({client: client}))
     @reapplyStyles(@el)
+
+this.ClientView = ClientView

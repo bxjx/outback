@@ -50,4 +50,5 @@
     };
     return OutbackView;
   })();
+  this.OutbackView = OutbackView;
 }).call(this);

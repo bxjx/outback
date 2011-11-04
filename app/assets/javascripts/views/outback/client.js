@@ -24,4 +24,5 @@
     };
     return ClientView;
   })();
+  this.ClientView = ClientView;
 }).call(this);
