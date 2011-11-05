@@ -12,6 +12,10 @@ class ClientView extends OutbackView
 		<div data-role="collapsible">
     <h3>Client Details</h3>
     </div>
+		<div data-role="collapsible">
+    <h3>History</h3>
+      <a href="#clients-<%=client.id%>" data-rel="dialog" data-transition="flip" data-role="button">New Contact</a>
+    </div>
     ''')
     @render(client)
   render: (client) =>

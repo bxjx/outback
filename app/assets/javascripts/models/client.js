@@ -14,6 +14,11 @@
       Client.__super__.constructor.apply(this, arguments);
     }
     Client.prototype.sync = Backbone.localSync;
+    Client.prototype.associations = {
+      "contacts": {
+        model: "Contacts"
+      }
+    };
     return Client;
   })();
   ClientCollection = (function() {

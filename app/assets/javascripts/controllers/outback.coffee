@@ -4,6 +4,7 @@ class OutbackController extends Backbone.Controller
     "sync&ui-state=dialog"  : "login"
     "sync"  : "sync"
     "caseload"  : "caseload"
+    "client-:id&ui-state=dialog"  : "contacts"
     "client-:id"  : "client"
   constructor: ->
     super
@@ -18,4 +19,6 @@ class OutbackController extends Backbone.Controller
     @_views['caseload'] ||= new CaseloadView
   client : (id) ->
     @_views['client'] ||= new ClientView(Clients.get(id))
+  contacts : (id) ->
+    @_views['contacts'] ||= new ContactFormView(Clients.get(id))
 this.outbackController = new OutbackController

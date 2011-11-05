@@ -35,9 +35,7 @@
       this.el = this.activePage();
       this.el.find('h1').html('Bridge Login');
       this.el.find('.ui-content').html(this.template());
-      console.info("adding content");
       this.reapplyStyles(this.el);
-      console.info("applying");
       return this.delegateEvents();
     };
     LoginView.prototype.onSubmit = function(e) {

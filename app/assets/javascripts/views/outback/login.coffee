@@ -38,9 +38,7 @@ class LoginView extends OutbackView
     @el = @activePage()
     @el.find('h1').html('Bridge Login')
     @el.find('.ui-content').html(@template())
-    console.info("adding content");
     @reapplyStyles(@el)
-    console.info("applying");
     @delegateEvents()
   onSubmit: (e) ->
     $.mobile.pageLoading()

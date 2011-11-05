@@ -26,7 +26,11 @@ class Api::V1::ClientsController < ApplicationController
       :preferred_phone => "0280909000",
       :preferred_email => 'info@jnsolutions.com.au',
       :email => Faker::Internet.free_email,
-      :crn => rand(100)
+      :crn => rand(100),
+      :contacts => [
+        {:notes => Faker::Lorem.paragraph, :created_at => 6.days.ago},
+        {:notes => Faker::Lorem.paragraph, :created_at => 12.days.ago}
+      ]
     }
   end
 end

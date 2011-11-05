@@ -11,5 +11,6 @@
 //= require jquery.mobile-1.0a4.1
 //= require backbone
 //= require backbone-localstorage
+//= require meninges-model
 //= require views/outback/outback
 //= require_tree .
