@@ -18,7 +18,7 @@ class OutbackController extends Backbone.Controller
   caseload : ->
     @_views['caseload'] ||= new CaseloadView
   client : (id) ->
-    @_views['client'] ||= new ClientView(Clients.get(id))
+    @_views['client'] = new ClientView(Clients.get(id))
   contacts : (id) ->
-    @_views['contacts'] ||= new ContactFormView(Clients.get(id))
+    @_views['contacts'] = new ContactFormView(Clients.get(id))
 this.outbackController = new OutbackController

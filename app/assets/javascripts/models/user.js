@@ -18,7 +18,6 @@
     User.prototype.lastSync = null;
     User.prototype.lastSyncStatus = null;
     User.prototype.startSync = function() {
-      console.log("starting sync");
       this.syncing = true;
       return Clients.bridgeSync();
     };
@@ -43,7 +42,6 @@
           this.currentUser = new User(data);
           this.currentUser.authenticated = true;
           this.currentUser.startSync();
-          console.log("about to trigger ==== " + Users.currentUser.syncing);
           return this.trigger('auth:authenticated', this.currentUser);
         }, this),
         error: __bind(function(jqXHR, textStatus) {

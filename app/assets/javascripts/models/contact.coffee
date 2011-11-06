@@ -2,9 +2,8 @@
 class Contact extends Backbone.Model
   sync: Backbone.localSync
   initialize: (attrs, options) ->
-    @created_at = Date.new()
+    #@set(@created_at = Date.new()
   validate: (attrs) ->
-    console.log("validating..")
     if attrs.notes is ""
       "Notes must be entered"
 

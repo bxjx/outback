@@ -1,6 +1,10 @@
 class ClientView extends OutbackView
   constructor: (client) ->
     super
+    # hmmm.. could this go wrong if update on model comes while not looking at
+    # the view for this client?
+    client.bind 'change', (changed_client) =>
+      @render(changed_client)
     @template = _.template('''
     <h2><%=client.get('first_name') + ' ' + client.get('last_name') %> (<%=client.get('jsid')%>)</h2>
     <div class="ui-grid-a">
@@ -13,14 +17,23 @@ class ClientView extends OutbackView
     <h3>Client Details</h3>
     </div>
 		<div data-role="collapsible">
-    <h3>History</h3>
+    <h3>Contacts</h3>
       <a href="#clients-<%=client.id%>" data-rel="dialog" data-transition="flip" data-role="button">New Contact</a>
+      <ul data-role="listview" data-inset="true">
+        <% _(client.get('contacts')).each(function(contact){ %>
+        <li>
+        <abbrev title="<%=contact.created_at%>" class="timeago ui-li-aside"></abbrev>
+        <%=contact.notes%>
+        </li>
+        <% }); %>
+      </ul>
     </div>
     ''')
     @render(client)
   render: (client) =>
     @el = @activePage()
     @el.find('.ui-content').html(@template({client: client}))
+    $("abbrev.timeago").timeago()
     @reapplyStyles(@el)
 
 this.ClientView = ClientView

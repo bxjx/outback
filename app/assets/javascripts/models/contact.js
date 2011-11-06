@@ -14,11 +14,8 @@
       Contact.__super__.constructor.apply(this, arguments);
     }
     Contact.prototype.sync = Backbone.localSync;
-    Contact.prototype.initialize = function(attrs, options) {
-      return this.created_at = Date["new"]();
-    };
+    Contact.prototype.initialize = function(attrs, options) {};
     Contact.prototype.validate = function(attrs) {
-      console.log("validating..");
       if (attrs.notes === "") {
         return "Notes must be entered";
       }

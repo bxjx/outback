@@ -12,7 +12,10 @@
     __extends(ClientView, OutbackView);
     function ClientView(client) {
       this.render = __bind(this.render, this);      ClientView.__super__.constructor.apply(this, arguments);
-      this.template = _.template('    <h2><%=client.get(\'first_name\') + \' \' + client.get(\'last_name\') %> (<%=client.get(\'jsid\')%>)</h2>\n    <div class="ui-grid-a">\n    <div class="ui-block-a"><strong>Mobile:</strong> <a href="tel:<%=client.get(\'phone_home\')%>"><%=client.get(\'phone_home\')%></a></div>\n    <div class="ui-block-b"><strong>Home:</strong> <a href="tel:<%=client.get(\'phone_mobile\')%>"><%=client.get(\'phone_mobile\')%></a></div>\n    </div>\n    <p><strong>Email:</strong> <a href="mailto:<%=client.get(\'email\')%>"><%=client.get(\'email\')%></a></p>\n    <p>10/22 Saxon St Brunswick 3036 VIC</a></p>\n<div data-role="collapsible">\n    <h3>Client Details</h3>\n    </div>\n<div data-role="collapsible">\n    <h3>History</h3>\n      <a href="#clients-<%=client.id%>" data-rel="dialog" data-transition="flip" data-role="button">New Contact</a>\n    </div>');
+      client.bind('change', __bind(function(changed_client) {
+        return this.render(changed_client);
+      }, this));
+      this.template = _.template('    <h2><%=client.get(\'first_name\') + \' \' + client.get(\'last_name\') %> (<%=client.get(\'jsid\')%>)</h2>\n    <div class="ui-grid-a">\n    <div class="ui-block-a"><strong>Mobile:</strong> <a href="tel:<%=client.get(\'phone_home\')%>"><%=client.get(\'phone_home\')%></a></div>\n    <div class="ui-block-b"><strong>Home:</strong> <a href="tel:<%=client.get(\'phone_mobile\')%>"><%=client.get(\'phone_mobile\')%></a></div>\n    </div>\n    <p><strong>Email:</strong> <a href="mailto:<%=client.get(\'email\')%>"><%=client.get(\'email\')%></a></p>\n    <p>10/22 Saxon St Brunswick 3036 VIC</a></p>\n<div data-role="collapsible">\n    <h3>Client Details</h3>\n    </div>\n<div data-role="collapsible">\n    <h3>Contacts</h3>\n      <a href="#clients-<%=client.id%>" data-rel="dialog" data-transition="flip" data-role="button">New Contact</a>\n      <ul data-role="listview" data-inset="true">\n        <% _(client.get(\'contacts\')).each(function(contact){ %>\n        <li>\n        <abbrev title="<%=contact.created_at%>" class="timeago ui-li-aside"></abbrev>\n        <%=contact.notes%>\n        </li>\n        <% }); %>\n      </ul>\n    </div>');
       this.render(client);
     }
     ClientView.prototype.render = function(client) {
@@ -20,6 +23,7 @@
       this.el.find('.ui-content').html(this.template({
         client: client
       }));
+      $("abbrev.timeago").timeago();
       return this.reapplyStyles(this.el);
     };
     return ClientView;

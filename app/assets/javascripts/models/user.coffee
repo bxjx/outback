@@ -5,7 +5,6 @@ class User extends Backbone.Model
   lastSync: null
   lastSyncStatus: null
   startSync: ->
-    console.log("starting sync")
     @syncing = true
     Clients.bridgeSync()
 
@@ -27,7 +26,6 @@ class UserCollection extends Backbone.Collection
         @currentUser = new User(data)
         @currentUser.authenticated = true
         @currentUser.startSync()
-        console.log("about to trigger ==== " + Users.currentUser.syncing)
         @trigger('auth:authenticated', @currentUser)
       error: (jqXHR, textStatus) =>
         switch jqXHR.status

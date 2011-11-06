@@ -2,6 +2,7 @@
 class ContactFormView extends OutbackView
   constructor: (client) ->
     super
+    @client = client
     @template = _.template('''
       <form action="#clients-<%=client.id%>" method="post">
         <div data-role="fieldcontain">
@@ -13,15 +14,15 @@ class ContactFormView extends OutbackView
         </div>
       </form>
     ''')
-    @render(client)
+    @render()
   events : {
     "submit form" : "onSubmit"
   }
-  render: (client) =>
+  render: ->
     @el = @activePage()
     @el.find('h1').html('Contact Form')
-    @el.find('.ui-content').html(@template({client: client}))
-    @$("input[name='notes']").val('')
+    @el.find('.ui-content').html(@template({'client': @client}))
+    @$("#notes").val('')
     @reapplyStyles(@el)
     @delegateEvents()
   onSubmit: (e) ->
@@ -29,12 +30,14 @@ class ContactFormView extends OutbackView
     e.stopPropagation()
     $.mobile.pageLoading()
     callbacks = 
-      success: =>
+      success: (saved_contact, attrs) =>
         $('.ui-dialog').dialog('close')
-        @announce('Contact saved')
       error: =>
         $('.ui-dialog').dialog('close')
         @announce(error)
-    @contact = Contacts.create({notes : @$("input[name='notes']").val()}, callbacks)
+    contacts = @client.get('contacts')
+    contacts.unshift({'notes': @$('#notes').val(), 'created_at': new Date()})
+    @client.save({'contacts': contacts}, callbacks)
+    @client.change()
 
 this.ContactFormView = ContactFormView
