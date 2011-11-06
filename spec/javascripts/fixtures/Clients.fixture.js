@@ -7,7 +7,11 @@ beforeEach(function() {
         {
           "id": 1,
           "first_name": 'Andrew',
-          "last_name": 'Snow'
+          "last_name": 'Snow',
+          "contacts": [
+            {"id": 1, "created_at": new Date(), "notes": "Some notes made on contact"},
+            {"id": 2, "created_at": new Date(), "notes": "Second contact"}
+          ]
         },
         {
           "id": 2,

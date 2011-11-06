@@ -13,3 +13,7 @@ written in coffeescript using backbone. Testing is done with jasmine.
 
 Email info@jnsolutions.com.au If you're interested in helping
 out with the project. We're always looking for talented programmers.
+
+### Todo this release:
+
+* sync contacts

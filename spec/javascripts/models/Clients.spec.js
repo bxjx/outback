@@ -27,12 +27,19 @@
         expect(Clients.length).toEqual(this.fixture.length);
         return expect(Clients.get(1).get('first_name')).toEqual(this.fixture[0].first_name);
       });
-      return it("should put them into the localstore", function() {
+      it("should put them into the localstore", function() {
         var storedClients;
         Clients.bridgeSync('valid');
         this.server.respond();
         storedClients = JSON.parse(localStorage.getItem('clients'));
         return expect(_.values(storedClients).length).toEqual(this.fixture.length);
+      });
+      return it("should create a nested collection of contacts", function() {
+        var client;
+        Clients.bridgeSync('valid');
+        this.server.respond();
+        client = Clients.get(1);
+        return expect(client.get('contacts').length).toEqual(this.fixture[0].contacts.length);
       });
     });
   });

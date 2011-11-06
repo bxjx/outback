@@ -167,13 +167,16 @@
       var now = this.attributes, escaped = this._escapedAttributes;
 
       // Run validation.
+      console.log("valid");
       if (!options.silent && this.validate && !this._performValidation(attrs, options)) return false;
+      console.log("post valid");
 
       // Check for changes of `id`.
       if ('id' in attrs) this.id = attrs.id;
 
       // Update attributes.
       for (var attr in attrs) {
+        console.log("doing " + attr);
         var val = attrs[attr];
         if (!_.isEqual(now[attr], val)) {
           now[attr] = val;

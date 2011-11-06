@@ -35,3 +35,9 @@ describe "Clients collection", ->
       @server.respond()
       storedClients = JSON.parse(localStorage.getItem('clients'))
       expect(_.values(storedClients).length).toEqual(@fixture.length)
+
+    it "should create a nested collection of contacts", ->
+      Clients.bridgeSync('valid')
+      @server.respond()
+      client = Clients.get(1)
+      expect(client.get('contacts').length).toEqual(@fixture[0].contacts.length)

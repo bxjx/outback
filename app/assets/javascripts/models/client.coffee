@@ -1,9 +1,9 @@
 class Client extends Backbone.Model
   sync: Backbone.localSync
   # start of work on meninges
-  associations: {
-    "contacts" : {model: "Contacts"}
-  }
+  #associations: {
+  #  "contacts" : {model: "Contacts"}
+  #}
 
 class ClientCollection extends Backbone.Collection
   localStorage: new Store("clients")

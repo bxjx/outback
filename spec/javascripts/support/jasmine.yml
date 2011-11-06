@@ -23,6 +23,7 @@ src_files:
   - vendor/assets/javascripts/backbone-localstorage.js
   - vendor/assets/javascripts/meninges-model.js
   - app/assets/javascripts/models/**/*.js
+  - app/assets/javascripts/views/outback/outback.js
   - app/assets/javascripts/views/**/*.js
   - app/assets/javascripts/controllers/**/*.js
   - spec/javascripts/fixtures/*.fixture.js
