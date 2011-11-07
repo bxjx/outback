@@ -15,6 +15,7 @@ Outback::Application.routes.draw do
       resources :clients do
         collection do
           get 'caseload'
+          put 'caseload'
         end
       end
     end

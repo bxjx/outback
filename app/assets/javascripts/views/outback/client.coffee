@@ -20,9 +20,10 @@ class ClientView extends OutbackView
     <h3>Contacts</h3>
       <a href="#clients-<%=client.id%>" data-rel="dialog" data-transition="flip" data-role="button">New Contact</a>
       <ul data-role="listview" data-inset="true">
+        <% var _view = this; %>
         <% _(client.get('contacts')).each(function(contact){ %>
         <li>
-        <abbrev title="<%=contact.created_at%>" class="timeago ui-li-aside"></abbrev>
+        <abbrev title="<%=_view.formattedDate(contact.created_at)%>" class="timeago ui-li-aside"></abbrev>
         <%=contact.notes%>
         </li>
         <% }); %>
@@ -35,5 +36,8 @@ class ClientView extends OutbackView
     @el.find('.ui-content').html(@template({client: client}))
     $("abbrev.timeago").timeago()
     @reapplyStyles(@el)
+  formattedDate: (date) ->
+    if /Z$/.test(date) then date else @isoDate(date)
+
 
 this.ClientView = ClientView

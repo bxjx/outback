@@ -58,6 +58,12 @@ _.extend(Store.prototype, {
     delete this.data[model.id];
     this.save();
     return model;
+  },
+  
+  // Delete everything
+  destroyAll: function(model) {
+    this.data = {};
+    this.save();
   }
 
 });

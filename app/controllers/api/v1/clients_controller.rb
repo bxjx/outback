@@ -1,16 +1,45 @@
 require 'faker'
 class Api::V1::ClientsController < ApplicationController
   before_filter :check_token
+  before_filter :setup_fake_clients
 
+  # Return dump of clients on caseload. Update the contacts if submitted with
+  # JSON data
   def caseload
-    render :json => (1..rand(20)).map{|i| fake_client(i)}
+    fake_clients = get_fake_clients
+    clients_data = params["_json"]
+    if clients_data
+      clients_data.each do |client_data|
+        client = fake_clients.detect{|c| c[:id].to_s == client_data[:id].to_s }
+        if client
+          client_data[:contacts].each do |contact_data|
+            contact = client[:contacts].detect{|c| c[:uid] == contact_data[:uid]}
+            if !contact
+              client[:contacts].unshift(contact_data)
+            end
+          end
+        end
+      end
+      Rails.cache.write('clients', fake_clients)
+    end
+    render :json => get_fake_clients
   end
 
   protected
 
   def check_token
     unless params[:token] == '0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21'
-      render(:json => [fake_client], :status => 401)
+      render(:json => [], :status => 401)
+    end
+  end
+
+  def get_fake_clients
+    Rails.cache.read('clients')
+  end
+
+  def setup_fake_clients
+    unless get_fake_clients
+      Rails.cache.write('clients', (1..rand(20)).map{|i| fake_client(i)})
     end
   end
 

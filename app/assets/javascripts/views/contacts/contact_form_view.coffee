@@ -35,9 +35,6 @@ class ContactFormView extends OutbackView
       error: =>
         $('.ui-dialog').dialog('close')
         @announce(error)
-    contacts = @client.get('contacts')
-    contacts.unshift({'notes': @$('#notes').val(), 'created_at': new Date()})
-    @client.save({'contacts': contacts}, callbacks)
-    @client.change()
+    @client.add_contact(@$('#notes').val(), callbacks)
 
 this.ContactFormView = ContactFormView

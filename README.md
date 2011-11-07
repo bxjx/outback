@@ -17,3 +17,4 @@ out with the project. We're always looking for talented programmers.
 ### Todo this release:
 
 * sync contacts
+* handle 500s and 404 on sync
