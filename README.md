@@ -1,5 +1,5 @@
 Outback
-=======
+--------
 
 Outback is a mobile web application for employment service providers trying to
 find meaningful employment for people in remote Australian communities. 
@@ -16,5 +16,8 @@ out with the project. We're always looking for talented programmers.
 
 ### Todo this release:
 
-* sync contacts
 * handle 500s and 404 on sync
+
+### General todo:
+
+* delete contacts

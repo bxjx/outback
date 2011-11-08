@@ -12,7 +12,7 @@ class ClientView extends OutbackView
     <div class="ui-block-b"><strong>Home:</strong> <a href="tel:<%=client.get('phone_mobile')%>"><%=client.get('phone_mobile')%></a></div>
     </div>
     <p><strong>Email:</strong> <a href="mailto:<%=client.get('email')%>"><%=client.get('email')%></a></p>
-    <p>10/22 Saxon St Brunswick 3036 VIC</a></p>
+    <p><%=client.get('residential_address')%> <%=client.get('residential_suburb')%> <%=client.get('residential_state')%> <%=client.get('residential_postcode')%></a></p>
 		<div data-role="collapsible">
     <h3>Client Details</h3>
     </div>

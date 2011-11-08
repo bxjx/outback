@@ -16,6 +16,7 @@ Outback::Application.routes.draw do
         collection do
           get 'caseload'
           put 'caseload'
+          get 'reset'
         end
       end
     end

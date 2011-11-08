@@ -1,6 +1,6 @@
 require 'faker'
 class Api::V1::ClientsController < ApplicationController
-  before_filter :check_token
+  before_filter :check_token, :except => :reset
   before_filter :setup_fake_clients
 
   # Return dump of clients on caseload. Update the contacts if submitted with
@@ -25,6 +25,11 @@ class Api::V1::ClientsController < ApplicationController
     render :json => get_fake_clients
   end
 
+  def reset
+    populate_fake_clients
+    render :text => 'done!'
+  end
+
   protected
 
   def check_token
@@ -39,8 +44,12 @@ class Api::V1::ClientsController < ApplicationController
 
   def setup_fake_clients
     unless get_fake_clients
-      Rails.cache.write('clients', (1..rand(20)).map{|i| fake_client(i)})
+      populate_fake_clients
     end
+  end
+
+  def populate_fake_clients
+    Rails.cache.write('clients', (1..rand(20)).map{|i| fake_client(i)})
   end
 
   def fake_client(id)
@@ -55,6 +64,10 @@ class Api::V1::ClientsController < ApplicationController
       :preferred_phone => "0280909000",
       :preferred_email => 'info@jnsolutions.com.au',
       :email => Faker::Internet.free_email,
+      :residential_address => Faker::Address.street_address,
+      :residential_suburb => Faker::Address.street_address, 
+      :residential_state => ['NSW', 'VIC'].sample, 
+      :residential_postcode => ['2000', '2001'].sample,
       :crn => rand(100),
       :contacts => [
         {:notes => Faker::Lorem.paragraph, :created_at => 6.days.ago},
