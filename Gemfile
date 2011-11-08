@@ -5,13 +5,17 @@ gem 'rails', '3.1.1'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
-
 # Asset template engines
 gem 'sass'
 gem 'coffee-script'
 gem 'uglifier'
 gem 'haml'
+group :production, :staging do
+  gem "mysql2"
+end
+group :development, :test do
+  gem "sqlite3"
+end
 
 gem 'jquery-rails'
 gem 'jasmine'
