@@ -15,6 +15,10 @@ class ClientView extends OutbackView
     <p><%=client.get('residential_address')%> <%=client.get('residential_suburb')%> <%=client.get('residential_state')%> <%=client.get('residential_postcode')%></a></p>
 		<div data-role="collapsible">
     <h3>Client Details</h3>
+    <div class="ui-grid-a">
+    <div class="ui-block-a"><strong>Stream:</strong> <%=client.get('stream_summary')%></div>
+    <div class="ui-block-b"><strong>Participation:</strong> <%=client.get('activity_tested?') ? 'required' : 'not required'%></div>
+    </div>
     </div>
 		<div data-role="collapsible">
     <h3>Contacts</h3>
@@ -24,6 +28,9 @@ class ClientView extends OutbackView
         <% _(client.get('contacts')).each(function(contact){ %>
         <li>
         <abbrev title="<%=_view.formattedDate(contact.created_at)%>" class="timeago ui-li-aside"></abbrev>
+        <% if (!contact.synced){ %>
+          <em>(Unsynced)</em>
+        <% } %>
         <%=contact.notes%>
         </li>
         <% }); %>

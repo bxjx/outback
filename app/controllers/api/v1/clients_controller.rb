@@ -16,6 +16,8 @@ class Api::V1::ClientsController < ApplicationController
             contact = client[:contacts].detect{|c| c[:uid] == contact_data[:uid]}
             if !contact
               client[:contacts].unshift(contact_data)
+            else
+              contact[:synced] = true
             end
           end
         end
@@ -53,12 +55,13 @@ class Api::V1::ClientsController < ApplicationController
   end
 
   def fake_client(id)
+    in_work_experience = [true,false].sample # probably a better way to do this ;)
     {
       :id => id,
       :first_name => Faker::Name.first_name,
       :last_name => Faker::Name.last_name,
       :jsid => rand(10000000),
-      :preferred_name => [Faker::Name.first_name, nil, nil].rand,
+      :preferred_name => [Faker::Name.first_name, nil, nil].sample,
       :phone_home => "0280909001",
       :phone_mobile => ('04%08d' % rand(100000000)),
       :preferred_phone => "0280909000",
@@ -69,9 +72,13 @@ class Api::V1::ClientsController < ApplicationController
       :residential_state => ['NSW', 'VIC'].sample, 
       :residential_postcode => ['2000', '2001'].sample,
       :crn => rand(100),
+      :stream_summary => "#{[1,2,3,4].sample} on #{2.days.ago.to_date.strftime('%d/%m/%Y')}",
+      :in_work_experience? => in_work_experience,
+      :work_experience_summary => (in_work_experience ? "Placed 21/12/2011" : nil),
+      :activity_tested? => [true,false].sample,
       :contacts => [
-        {:notes => Faker::Lorem.paragraph, :created_at => 6.days.ago},
-        {:notes => Faker::Lorem.paragraph, :created_at => 12.days.ago}
+        {:notes => Faker::Lorem.paragraph, :created_at => 6.days.ago, :synced => true},
+        {:notes => Faker::Lorem.paragraph, :created_at => 12.days.ago, :synced => true}
       ]
     }
   end

@@ -1,21 +1,15 @@
 CACHE MANIFEST
-/images/outback/product-bridge.gif
-/stylesheets/outback/images/ajax-loader.png
-/stylesheets/outback/images/icon-search-black.png
-/stylesheets/outback/images/icons-18-black.png
-/stylesheets/outback/images/icons-18-white.png
-/stylesheets/outback/images/icons-36-black.png
-/stylesheets/outback/images/icons-36-white.png
-<% unless controller.perform_caching -%>
-/stylesheets/outback/jquery.mobile-1.0a4.1.css
-/stylesheets/outback/application.css
-/javascripts/outback/jquery-1.5.min.js
-/javascripts/outback/underscore-min.js
-/javascripts/outback/backbone.js
-/javascripts/outback/backbone.localStorage.js
-/javascripts/outback/jquery.mobile-1.0a4.1.js
-/javascripts/outback/application.js
-<% else -%>
-/javascripts/outback/outback_cached.js
-/javascripts/outback/outback_cached.ss
+assets/product-bridge.gif
+assets/content-bg.gif
+assets/ajax-loader.png
+assets/icon-search-black.png
+assets/icons-18-black.png
+assets/icons-18-white.png
+assets/icons-36-black.png
+assets/icons-36-white.png
+<% if controller.perform_caching -%>
+assets/application.js
+assets/application.css
 <% end -%>
+NETWORK:
+*

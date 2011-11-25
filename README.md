@@ -21,3 +21,4 @@ out with the project. We're always looking for talented programmers.
 ### General todo:
 
 * delete contacts
+* sync contacts

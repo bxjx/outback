@@ -5,12 +5,11 @@
 # * authentication with Bridge
 # * syncing the caseload
 # * displaying contact details while offline
-# * 
+# * syncing the contacts
 #
 # Planned features:
 #
 # * viewing the client history while offline
-# * creating contacts that can be later synced
 # * viewing the referral data
 # * viewing placement data
 # * viewing attachments
@@ -34,8 +33,12 @@
 
 # Load the clients from localstore and start the app
 $(document).ready ->
-  # fyi, controller must be instantiated before history can be started.. am
-  # sure this wall change in next version of backbone.js
-  Clients.fetch success: ->
-    Backbone.history.start()
-    outbackController.home()
+  # jQuery mobile doesn't really handle deep linking too well
+  if window.location.href.match(/#/)
+    window.location = window.location.href.replace(/#.*/, '')
+  else
+    # fyi, controller must be instantiated before history can be started.. am
+    # sure this wall change in next version of backbone.js
+    Clients.fetch success: ->
+      Backbone.history.start()
+      outbackController.home()

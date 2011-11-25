@@ -3,7 +3,7 @@ Outback::Application.routes.draw do
   # first created -> highest priority.
 
   root :to => 'outback#index'
-  match '/outback/manifest', {:controller => 'outback', :action =>'manifest'}
+  match '/manifest', {:controller => 'outback', :action =>'manifest'}
   namespace :api do
     namespace :v1 do
       resources :users do
