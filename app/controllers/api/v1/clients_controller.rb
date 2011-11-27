@@ -11,7 +11,7 @@ class Api::V1::ClientsController < ApplicationController
     if clients_data
       clients_data.each do |client_data|
         client = fake_clients.detect{|c| c[:id].to_s == client_data[:id].to_s }
-        if client
+        if client && client_data[:contacts]
           client_data[:contacts].each do |contact_data|
             contact = client[:contacts].detect{|c| c[:uid] == contact_data[:uid]}
             if !contact
