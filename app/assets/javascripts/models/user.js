@@ -39,6 +39,15 @@
 
     UserCollection.prototype.currentUser = false;
 
+    UserCollection.prototype.secured = function() {
+      return Clients.localStorage.key;
+    };
+
+    UserCollection.prototype.secure = function(passphrase) {
+      console.log('calling secuire with ' + passphrase);
+      return Clients.localStorage = new Store('clients', passphrase);
+    };
+
     UserCollection.prototype.authenticate = function(login, password) {
       var _this = this;
       return $.ajax('/api/v1/users/auth.json', {

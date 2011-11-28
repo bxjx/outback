@@ -43,7 +43,7 @@
       ClientCollection.__super__.constructor.apply(this, arguments);
     }
 
-    ClientCollection.prototype.localStorage = new Store("clients");
+    ClientCollection.prototype.localStorage = null;
 
     ClientCollection.prototype.sync = Backbone.localSync;
 

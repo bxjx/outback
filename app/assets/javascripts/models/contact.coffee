@@ -8,7 +8,6 @@ class Contact extends Backbone.Model
       "Notes must be entered"
 
 class ContactCollection extends Backbone.Collection
-  localStorage: new Store("contacts")
   sync: Backbone.localSync
   model: Contact
 

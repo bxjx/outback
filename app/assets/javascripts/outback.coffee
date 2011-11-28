@@ -43,6 +43,7 @@ $(document).ready ->
       window.location.reload()
     $(window.applicationCache).bind 'cached noupdate error obsolete', ->
       $.mobile.pageLoading(true)
+      Users.secure('dummy passphrase')
       Clients.fetch success: ->
         Backbone.history.start()
         outbackController.home()

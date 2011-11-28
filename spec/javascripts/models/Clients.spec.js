@@ -3,10 +3,10 @@
     return describe("When synchronising caseload with bridge with a valid token and no existing clients", function() {
       beforeEach(function() {
         this.token = '0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21';
+        Users.secure('test passphrase');
         Users.currentUser = new Users.model({
           token: this.token
         });
-        console.log(Users.currentUser);
         this.clearLocalStore();
         this.fixture = this.fixtures.Clients.valid;
         this.server = sinon.fakeServer.create();

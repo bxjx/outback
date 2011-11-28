@@ -1,9 +1,6 @@
 // A simple module to replace `Backbone.sync` with *localStorage*-based
 // persistence. Models are given GUIDS, and saved into a JSON object. Simple
 // as that.
-var pass = 'test this'
-var hashObj = new jsSHA(pass, "ASCII");
-var encryptionKey = pass; //hashObj.getHash("SHA-512", "HEX");
 
 // Generate four random hex digits.
 function S4() {
@@ -17,22 +14,33 @@ function guid() {
 
 // Our Store is represented by a single JS object in *localStorage*. Create it
 // with a meaningful name, like the name you'd give a table.
-var Store = function(name) {
+var Store = function(name, passphrase) {
   this.name = name;
+  console.log("with " + passphrase)
+  this.generateKey(passphrase);
   var store = localStorage.getItem(this.name);
-  if (encryptionKey){
-    this.data = (store && JSON.parse($.jCryption.decrypt(store, encryptionKey))) || {};
-  }else{
-    this.data = {};
-    localStorage.setItem(this.name, JSON.stringify(this.data));
+  if (this.key){
+    try{
+      this.data = (store && JSON.parse($.jCryption.decrypt(store, this.key))) || {};
+    }catch(e){
+      // if decrypt fails, clear the data
+      this.data = {}
+      this.save()
+    }
   }
 };
 
 _.extend(Store.prototype, {
+  
+  generateKey: function(passphrase) {
+    this.key = new jsSHA(passphrase, "ASCII").getHash("SHA-512", "HEX");
+  },
 
   // Save the current state of the **Store** to *localStorage*.
   save: function() {
-    localStorage.setItem(this.name, $.jCryption.encrypt(JSON.stringify(this.data), encryptionKey));
+    if (this.key){
+      localStorage.setItem(this.name, $.jCryption.encrypt(JSON.stringify(this.data), this.key));
+    }
   },
 
   // Add a model, giving it a (hopefully)-unique GUID, if it doesn't already

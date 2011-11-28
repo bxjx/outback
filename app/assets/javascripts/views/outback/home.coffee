@@ -1,6 +1,7 @@
 class HomeView extends OutbackView
   constructor: ->
     super
+    #@ensure_outback_is_secure
     @template = _.template('''
     <ul data-role="listview" data-inset="true">
       <li data-role="list-divider">Account and Sync</li>

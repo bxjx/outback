@@ -15,6 +15,15 @@ class UserCollection extends Backbone.Collection
   # User who has been authenticated with Bridge
   currentUser: false
 
+  # secured if we've got an encryption key set TODO: see if you can alias in
+  # coffescript
+  secured: ->
+    Clients.localStorage.key
+
+  secure: (passphrase) ->
+    console.log('calling secuire with ' + passphrase)
+    Clients.localStorage = new Store('clients', passphrase)
+
   # Attempt to authenicate the login/password with Bridge. It triggers auth:*
   # events depending on the result
   authenticate: (login, password) ->

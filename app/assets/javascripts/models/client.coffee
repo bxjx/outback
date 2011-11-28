@@ -19,7 +19,7 @@ class Client extends Backbone.Model
 
 class ClientCollection extends Backbone.Collection
   # setup local storage of clients
-  localStorage: new Store("clients")
+  localStorage: null
   sync: Backbone.localSync
   url: ->
     '/api/v1/clients/caseload.json?token=' + Users.currentUser.get('token')

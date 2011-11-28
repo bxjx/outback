@@ -2,7 +2,6 @@ class LoginView extends OutbackView
   constructor: ->
     super
     Users.bind 'auth:unauthorised', =>
-      $('#password').val('')
       @announce('Authentication failed. Please try again')
     Users.bind 'auth:timeout', =>
       @announce('Network timeout. Possibly wait until your connecton is better')
@@ -46,6 +45,7 @@ class LoginView extends OutbackView
       @$("input[name='login']").val(),
       @$("input[name='password']").val()
     )
+    @$("input[name='password']").val('')
     e.preventDefault()
     e.stopPropagation()
 

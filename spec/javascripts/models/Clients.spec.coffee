@@ -4,8 +4,8 @@ describe "Clients collection", ->
 
     beforeEach ->
       @token = '0d2acb7d-d4f6-4dbb-bf6e-6ebac7fa5a21'
+      Users.secure('test passphrase')
       Users.currentUser = new Users.model(token : @token)
-      console.log(Users.currentUser)
       @clearLocalStore()
       @fixture = @fixtures.Clients.valid
       @server = sinon.fakeServer.create()

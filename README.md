@@ -20,8 +20,7 @@ out with the project. We're always looking for talented programmers.
 
 ### General todo:
 
-* add user to contact list
 * force user to enter passphrase upon logging in (passphrase only stored in
   memory)
-  * add local encryption
   * add option to clear data
+  * handle failure on decryption (i.e. to parse)
