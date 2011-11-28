@@ -37,8 +37,12 @@ $(document).ready ->
   if window.location.href.match(/#/)
     window.location = window.location.href.replace(/#.*/, '')
   else
-    # fyi, controller must be instantiated before history can be started.. am
-    # sure this wall change in next version of backbone.js
-    Clients.fetch success: ->
-      Backbone.history.start()
-      outbackController.home()
+    $.mobile.pageLoading()
+    $(window.applicationCache).bind 'updateready', ->
+      window.applicationCache.swapCache()
+      window.location.reload()
+    $(window.applicationCache).bind 'cached noupdate error obsolete', ->
+      $.mobile.pageLoading(true)
+      Clients.fetch success: ->
+        Backbone.history.start()
+        outbackController.home()
