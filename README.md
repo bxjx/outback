@@ -20,5 +20,8 @@ out with the project. We're always looking for talented programmers.
 
 ### General todo:
 
-* delete contacts
-* sync contacts
+* add user to contact list
+* force user to enter passphrase upon logging in (passphrase only stored in
+  memory)
+  * add local encryption
+  * add option to clear data

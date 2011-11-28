@@ -15,6 +15,7 @@ class Api::V1::ClientsController < ApplicationController
           client_data[:contacts].each do |contact_data|
             contact = client[:contacts].detect{|c| c[:uid] == contact_data[:uid]}
             if !contact
+              contact_data[:user_name] = 'Demo User'
               client[:contacts].unshift(contact_data)
             else
               contact[:synced] = true
@@ -77,8 +78,8 @@ class Api::V1::ClientsController < ApplicationController
       :work_experience_summary => (in_work_experience ? "Placed 21/12/2011" : nil),
       :activity_tested? => [true,false].sample,
       :contacts => [
-        {:notes => Faker::Lorem.paragraph, :created_at => 6.days.ago, :synced => true},
-        {:notes => Faker::Lorem.paragraph, :created_at => 12.days.ago, :synced => true}
+        {:notes => Faker::Lorem.paragraph, :created_at => 6.days.ago, :synced => true, :user_name => Faker::Name.name},
+        {:notes => Faker::Lorem.paragraph, :created_at => 12.days.ago, :synced => true, :user_name => Faker::Name.name}
       ]
     }
   end
