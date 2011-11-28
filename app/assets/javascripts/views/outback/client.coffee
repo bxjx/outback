@@ -31,7 +31,9 @@ class ClientView extends OutbackView
         <% if (!contact.synced){ %>
           <em>(Unsynced)</em>
         <% } %>
-        <%=contact.user_name%>: 
+        <% if (contact.user_name){ %>
+          <%=contact.user_name%>: 
+        <% } %>
         <%=contact.notes%>
         </li>
         <% }); %>
