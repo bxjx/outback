@@ -24,7 +24,7 @@
       if (Users.currentUser) {
         contact_data['user_name'] = Users.currentUser.get('name');
       }
-      contacts.unshift(contact_data['user_name']);
+      contacts.unshift(contact_data);
       this.change();
       return this.save({
         'contacts': contacts

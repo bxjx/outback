@@ -13,7 +13,7 @@ class Client extends Backbone.Model
       'uid': guid()
     if Users.currentUser
       contact_data['user_name'] = Users.currentUser.get('name')
-    contacts.unshift contact_data['user_name']
+    contacts.unshift contact_data
     @change() # maybe this shouldn't be used or only on success?
     @save({'contacts': contacts}, callbacks)
 
