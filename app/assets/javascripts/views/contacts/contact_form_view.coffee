@@ -25,6 +25,7 @@ class ContactFormView extends OutbackView
     @$("#notes").val('')
     @reapplyStyles(@el)
     @delegateEvents()
+    @$("#notes").focus()
   onSubmit: (e) ->
     e.preventDefault()
     e.stopPropagation()

@@ -6,7 +6,7 @@ class SyncView extends OutbackView
       <% if (Users.currentUser && Users.currentUser.syncing){ %>
       <a data-role="button" data-theme="b" id="#cancel">Cancel Sync</a>
       <% }else{ %>
-      <a href="#login" data-rel="dialog" data-transition="flip" data-role="button" data-icon="refresh">Sync with Bridge</a>
+      <a href="#login" data-rel="dialog" data-transition="flip" data-role="button" data-icon="refresh">Start Sync</a>
       <% }%>
       
       <% if (Users.currentUser && Users.currentUser.lastSyncStarted){ %>
