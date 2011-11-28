@@ -9,8 +9,9 @@
 //= require jquery.timeago
 //= require async
 //= require jquery.mobile-1.0a4.1
+//= require jquery.jcryption
 //= require backbone
-//= require backbone-localstorage
+//= require backbone-cryptstorage
 //= require meninges-model
 //= require views/outback/outback
 //= require_tree .

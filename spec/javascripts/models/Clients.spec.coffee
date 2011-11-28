@@ -32,11 +32,10 @@ describe "Clients collection", ->
       expect(Clients.length).toEqual(@fixture.length)
       expect(Clients.get(1).get('first_name')).toEqual(@fixture[0].first_name)
 
-    it "should put them into the localstore", ->
+    it "should put them encrypted into localstore", ->
       Clients.bridgeSync()
       @server.respond()
-      storedClients = JSON.parse(localStorage.getItem('clients'))
-      expect(_.values(storedClients).length).toEqual(@fixture.length)
+      expect(!localStorage.getItem('clients').match(/first_name/))
 
     it "should create a nested collection of contacts", ->
       Clients.bridgeSync()

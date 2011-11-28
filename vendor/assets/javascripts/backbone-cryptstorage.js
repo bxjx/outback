@@ -1,6 +1,9 @@
 // A simple module to replace `Backbone.sync` with *localStorage*-based
 // persistence. Models are given GUIDS, and saved into a JSON object. Simple
 // as that.
+var pass = 'test this'
+var hashObj = new jsSHA(pass, "ASCII");
+var encryptionKey = pass; //hashObj.getHash("SHA-512", "HEX");
 
 // Generate four random hex digits.
 function S4() {
@@ -17,14 +20,19 @@ function guid() {
 var Store = function(name) {
   this.name = name;
   var store = localStorage.getItem(this.name);
-  this.data = (store && JSON.parse(store)) || {};
+  if (encryptionKey){
+    this.data = (store && JSON.parse($.jCryption.decrypt(store, encryptionKey))) || {};
+  }else{
+    this.data = {};
+    localStorage.setItem(this.name, JSON.stringify(this.data));
+  }
 };
 
 _.extend(Store.prototype, {
 
   // Save the current state of the **Store** to *localStorage*.
   save: function() {
-    localStorage.setItem(this.name, JSON.stringify(this.data));
+    localStorage.setItem(this.name, $.jCryption.encrypt(JSON.stringify(this.data), encryptionKey));
   },
 
   // Add a model, giving it a (hopefully)-unique GUID, if it doesn't already

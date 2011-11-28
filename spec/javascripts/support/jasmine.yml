@@ -20,7 +20,8 @@ src_files:
   - vendor/assets/javascripts/backbone.js
   - vendor/assets/javascripts/jquery.timeago.js
   - vendor/assets/javascripts/jquery.mobile-1.0a4.1.js
-  - vendor/assets/javascripts/backbone-localstorage.js
+  - vendor/assets/javascripts/jquery.jcryption.js
+  - vendor/assets/javascripts/backbone-cryptstorage.js
   - vendor/assets/javascripts/meninges-model.js
   - app/assets/javascripts/models/**/*.js
   - app/assets/javascripts/views/outback/outback.js
