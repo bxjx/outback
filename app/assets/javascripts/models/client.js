@@ -13,14 +13,18 @@
     Client.prototype.sync = Backbone.localSync;
 
     Client.prototype.add_contact = function(notes, callbacks) {
-      var contacts;
+      var contact_data, contacts;
       contacts = this.get('contacts');
-      contacts.unshift({
+      contact_data = {
         'notes': notes,
         'created_at': new Date(),
         'synced': false,
         'uid': guid()
-      });
+      };
+      if (Users.currentUser) {
+        contact_data['user_name'] = Users.currentUser.get('name');
+      }
+      contacts.unshift(contact_data['user_name']);
       this.change();
       return this.save({
         'contacts': contacts

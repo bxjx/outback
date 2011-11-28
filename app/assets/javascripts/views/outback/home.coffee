@@ -3,8 +3,9 @@ class HomeView extends OutbackView
     super
     @template = _.template('''
     <ul data-role="listview" data-inset="true">
+      <li data-role="list-divider">Account and Sync</li>
+      <li><a href="#sync">Sync with Bridge</a></li>
       <li data-role="list-divider">Caseload</li>
-      <li data-role="list-divider">Account and Sync</li> <li><a href="#sync">Sync with Bridge</a></li>
       <li><a href="#caseload">Caseload</a></li>
     </ul>
     ''')

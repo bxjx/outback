@@ -6,11 +6,14 @@ class Client extends Backbone.Model
   # in the future
   add_contact: (notes, callbacks) ->
     contacts = @get('contacts')
-    contacts.unshift
+    contact_data =
       'notes': notes
       'created_at': new Date()
       'synced': false
       'uid': guid()
+    if Users.currentUser
+      contact_data['user_name'] = Users.currentUser.get('name')
+    contacts.unshift contact_data['user_name']
     @change() # maybe this shouldn't be used or only on success?
     @save({'contacts': contacts}, callbacks)
 
