@@ -10,13 +10,8 @@
       });
       return $(window.applicationCache).bind('cached noupdate error obsolete', function() {
         $.mobile.pageLoading(true);
-        Users.secure('dummy passphrase');
-        return Clients.fetch({
-          success: function() {
-            Backbone.history.start();
-            return outbackController.home();
-          }
-        });
+        Backbone.history.start();
+        return outbackController.home();
       });
     }
   });

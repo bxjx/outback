@@ -2335,6 +2335,8 @@ $.widget( "mobile.page", $.mobile.widget, {
 
 		function defaultTransition(){
 			if(transition === undefined){
+        console.log('got default trans..');
+        console.log(nextPageRole);
 				transition = ( nextPageRole && nextPageRole === 'dialog' ) ? 'pop' : $.mobile.defaultTransition;
 			}
 		}
@@ -2497,17 +2499,23 @@ $.widget( "mobile.page", $.mobile.widget, {
           //console.log("Routing to " + url + "...");
           if ($('#' + url).length){
             to = $('#' + url)
+            enhancePage();
           }else{
-            var pageType = url == "login" ? 'dialog' : 'page';
-            //console.log("using.. " + pageType);
+            var pageType;
+            if (url.match(/login/)){
+              pageType = 'dialog';
+            }else{
+              pageType = 'page';
+            }
+            console.log("using.. " + pageType);
             to = $("<div data-role='" + pageType + "' id='" + url + "' data-theme='b'>" +
                 '<div data-role="header" data-theme="b">' +
                 '<h1>&nbsp;</h1>' +
                 '</div>' +
                 "<div data-role='content'></div></div>").appendTo('body');
             //console.log("appended...");
+            enhancePage();
           }
-          enhancePage();
         }
         
         /*

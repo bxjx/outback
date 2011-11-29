@@ -8,7 +8,8 @@
 
     OutbackController.prototype.routes = {
       "home": "home",
-      "home&ui-state=dialog": "localstore",
+      "unlock": "unlock",
+      "secure": "secure",
       "sync&ui-state=dialog": "login",
       "sync": "sync",
       "caseload": "caseload",
@@ -22,23 +23,23 @@
     }
 
     OutbackController.prototype.home = function() {
-      var _base;
-      return (_base = this._views)['home'] || (_base['home'] = new HomeView);
+      return this._views['home'] = new HomeView;
     };
 
-    OutbackController.prototype.localstore = function() {
-      var _base;
-      return (_base = this._views)['localstore'] || (_base['localstore'] = new LocalStoreView);
+    OutbackController.prototype.secure = function() {
+      return this._views['secure'] = new SecureView;
+    };
+
+    OutbackController.prototype.unlock = function() {
+      return this._views['unlock'] = new UnlockView;
     };
 
     OutbackController.prototype.sync = function() {
-      var _base;
-      return (_base = this._views)['sync'] || (_base['sync'] = new SyncView);
+      return this._views['sync'] = new SyncView;
     };
 
     OutbackController.prototype.login = function() {
-      var _base;
-      return (_base = this._views)['login'] || (_base['login'] = new LoginView);
+      return this._views['login'] = new LoginView;
     };
 
     OutbackController.prototype.caseload = function() {

@@ -8,7 +8,7 @@
 
     function HomeView() {
       this.render = __bind(this.render, this);      HomeView.__super__.constructor.apply(this, arguments);
-      this.template = _.template('<ul data-role="listview" data-inset="true">\n  <li data-role="list-divider">Account and Sync</li>\n  <li><a href="#sync">Sync with Bridge</a></li>\n  <li data-role="list-divider">Caseload</li>\n  <li><a href="#caseload">Caseload</a></li>\n</ul>');
+      this.template = _.template('<ul data-role="listview" data-inset="true">\n  <li data-role="list-divider">Account and Sync</li>\n  <% if (Users.unlocked){ %>\n    <li><a href="#sync">Sync with Bridge</a></li>\n    <li data-role="list-divider">Caseload</li>\n    <li><a href="#caseload">Caseload</a></li>\n  <% }else if (Users.secured){ %>\n    <li><a href="#unlock">Unlock</a></li>\n  <% }else{ %>\n    <li><a href="#secure">Create password</a></li>\n  <% } %>\n</ul>');
       this.render();
     }
 

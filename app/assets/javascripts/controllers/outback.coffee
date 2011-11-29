@@ -1,7 +1,8 @@
 class OutbackController extends Backbone.Controller
   routes :
     "home"  : "home"
-    "home&ui-state=dialog"  : "localstore"
+    "unlock"  : "unlock"
+    "secure"  : "secure"
     "sync&ui-state=dialog"  : "login"
     "sync"  : "sync"
     "caseload"  : "caseload"
@@ -11,17 +12,20 @@ class OutbackController extends Backbone.Controller
     super
     @_views = {}
   home : ->
-    @_views['home'] ||= new HomeView
-  localstore : ->
-    @_views['localstore'] ||= new LocalStoreView
+    @_views['home'] = new HomeView
+  secure: ->
+    @_views['secure'] = new SecureView
+  unlock: ->
+    @_views['unlock'] = new UnlockView
   sync : ->
-    @_views['sync'] ||= new SyncView
+    @_views['sync'] = new SyncView
   login : ->
-    @_views['login'] ||= new LoginView
+    @_views['login'] = new LoginView
   caseload : ->
     @_views['caseload'] = new CaseloadView
   client : (id) ->
     @_views['client'] = new ClientView(Clients.get(id))
   contacts : (id) ->
     @_views['contacts'] = new ContactFormView(Clients.get(id))
+
 this.outbackController = new OutbackController

@@ -24,6 +24,7 @@
     };
 
     OutbackView.prototype.redirectTo = function(page) {
+      console.log('redirecting to...' + page);
       return $.mobile.changePage(page);
     };
 
@@ -48,10 +49,6 @@
         }
       };
       return "" + (d.getUTCFullYear()) + "-" + (pad(d.getUTCMonth() + 1)) + "-" + (pad(d.getUTCDate())) + "T" + (pad(d.getUTCHours())) + ":" + (pad(d.getUTCMinutes())) + ":" + (pad(d.getUTCSeconds())) + "Z";
-    };
-
-    OutbackView.prototype.ensure_outback_is_secure = function() {
-      if (!Users.secured) return this.redirectTo('localstore');
     };
 
     return OutbackView;

@@ -39,13 +39,50 @@
 
     UserCollection.prototype.currentUser = false;
 
+    UserCollection.prototype.unlocked = false;
+
     UserCollection.prototype.secured = function() {
-      return Clients.localStorage.key;
+      return Clients.localStorage && Clients.localStorage.key;
     };
 
     UserCollection.prototype.secure = function(passphrase) {
-      console.log('calling secuire with ' + passphrase);
-      return Clients.localStorage = new Store('clients', passphrase);
+      var key;
+      var _this = this;
+      key = this.checksum(passphrase);
+      localStorage.setItem('key', key);
+      localStorage.setItem('clients', null);
+      this.unlocked = true;
+      Clients.localStorage = new Store('clients', key);
+      return Clients.fetch({
+        success: function() {
+          return _this.trigger('outback:unlock:success');
+        }
+      });
+    };
+
+    UserCollection.prototype.secured = function() {
+      return localStorage.getItem('key');
+    };
+
+    UserCollection.prototype.unlock = function(passphrase) {
+      var key;
+      var _this = this;
+      key = localStorage.getItem('key', key);
+      if (this.checksum(passphrase) === key) {
+        Clients.localStorage = new Store('clients', key);
+        return Clients.fetch({
+          success: function() {
+            _this.unlocked = true;
+            return _this.trigger('outback:unlock:success');
+          }
+        });
+      } else {
+        return this.trigger('outback:unlock:failed');
+      }
+    };
+
+    UserCollection.prototype.checksum = function(text) {
+      return new jsSHA(text, "ASCII").getHash("SHA-512", "HEX");
     };
 
     UserCollection.prototype.authenticate = function(login, password) {

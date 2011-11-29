@@ -14,10 +14,9 @@ function guid() {
 
 // Our Store is represented by a single JS object in *localStorage*. Create it
 // with a meaningful name, like the name you'd give a table.
-var Store = function(name, passphrase) {
+var Store = function(name, key) {
   this.name = name;
-  console.log("with " + passphrase)
-  this.generateKey(passphrase);
+  this.key = key;
   var store = localStorage.getItem(this.name);
   if (this.key){
     try{
@@ -32,10 +31,6 @@ var Store = function(name, passphrase) {
 
 _.extend(Store.prototype, {
   
-  generateKey: function(passphrase) {
-    this.key = new jsSHA(passphrase, "ASCII").getHash("SHA-512", "HEX");
-  },
-
   // Save the current state of the **Store** to *localStorage*.
   save: function() {
     if (this.key){

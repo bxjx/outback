@@ -1,13 +1,18 @@
 class HomeView extends OutbackView
   constructor: ->
     super
-    #@ensure_outback_is_secure
     @template = _.template('''
     <ul data-role="listview" data-inset="true">
       <li data-role="list-divider">Account and Sync</li>
-      <li><a href="#sync">Sync with Bridge</a></li>
-      <li data-role="list-divider">Caseload</li>
-      <li><a href="#caseload">Caseload</a></li>
+      <% if (Users.unlocked){ %>
+        <li><a href="#sync">Sync with Bridge</a></li>
+        <li data-role="list-divider">Caseload</li>
+        <li><a href="#caseload">Caseload</a></li>
+      <% }else if (Users.secured){ %>
+        <li><a href="#unlock">Unlock</a></li>
+      <% }else{ %>
+        <li><a href="#secure">Create password</a></li>
+      <% } %>
     </ul>
     ''')
     @render()

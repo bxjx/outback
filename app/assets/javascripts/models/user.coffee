@@ -15,14 +15,40 @@ class UserCollection extends Backbone.Collection
   # User who has been authenticated with Bridge
   currentUser: false
 
+  # true if outback data has been successfully unlocked and decrypted
+  unlocked: false
+
   # secured if we've got an encryption key set TODO: see if you can alias in
   # coffescript
   secured: ->
-    Clients.localStorage.key
+    Clients.localStorage && Clients.localStorage.key
 
   secure: (passphrase) ->
-    console.log('calling secuire with ' + passphrase)
-    Clients.localStorage = new Store('clients', passphrase)
+    key = @checksum(passphrase)
+    localStorage.setItem('key', key)
+    localStorage.setItem('clients', null)
+    @unlocked = true
+    Clients.localStorage = new Store('clients', key)
+    Clients.fetch success: =>
+      @trigger('outback:unlock:success')
+
+  secured: ->
+    localStorage.getItem('key')
+
+  unlock: (passphrase) ->
+    key = localStorage.getItem('key', key)
+    if @checksum(passphrase) is key
+      Clients.localStorage = new Store('clients', key)
+      Clients.fetch success: =>
+        @unlocked = true
+        @trigger('outback:unlock:success')
+    else
+      # emit failure so they can try again
+      @trigger('outback:unlock:failed')
+
+  checksum: (text)->
+    new jsSHA(text, "ASCII").getHash("SHA-512", "HEX");
+    
 
   # Attempt to authenicate the login/password with Bridge. It triggers auth:*
   # events depending on the result

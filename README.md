@@ -20,7 +20,5 @@ out with the project. We're always looking for talented programmers.
 
 ### General todo:
 
-* force user to enter passphrase upon logging in (passphrase only stored in
-  memory)
-  * add option to clear data
-  * handle failure on decryption (i.e. to parse)
+* get back transition right
+* force timeout on login
