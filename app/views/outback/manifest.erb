@@ -10,9 +10,5 @@ assets/icons-36-white.png
 assets/application.js
 assets/application.css
 NETWORK:
-<% if controller.perform_caching -%>
-/version_1
-<% else -%>
-/force_manifest_<%=File.mtime("#{Rails.root.to_path}/app/assets/javascripts/application.js").seconds_since_midnight%>
-<% end -%>
+/version_<%=File.mtime("#{Rails.root.to_path}/app/assets/javascripts/application.js").seconds_since_midnight%>
 *

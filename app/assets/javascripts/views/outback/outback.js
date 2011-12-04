@@ -24,8 +24,11 @@
     };
 
     OutbackView.prototype.redirectTo = function(page) {
-      console.log('redirecting to...' + page);
-      return $.mobile.changePage(page);
+      if (page === 'home') {
+        return $.mobile.changePage(page, null, 'reverse');
+      } else {
+        return $.mobile.changePage(page);
+      }
     };
 
     OutbackView.prototype.announce = function(message) {

@@ -18,34 +18,43 @@ class UserCollection extends Backbone.Collection
   # true if outback data has been successfully unlocked and decrypted
   unlocked: false
 
-  # secured if we've got an encryption key set TODO: see if you can alias in
-  # coffescript
-  secured: ->
-    Clients.localStorage && Clients.localStorage.key
-
+  # Set up an encrypted localStorage with the passphrase. All existing data
+  # will be lost
   secure: (passphrase) ->
-    key = @checksum(passphrase)
-    localStorage.setItem('key', key)
+    localStorage.setItem('challenge', @checksum("challenge:#{passphrase}"))
     localStorage.setItem('clients', null)
     @unlocked = true
-    Clients.localStorage = new Store('clients', key)
+    Clients.localStorage = new Store('clients', @checksum(passphrase))
     Clients.fetch success: =>
       @trigger('outback:unlock:success')
 
   secured: ->
-    localStorage.getItem('key')
+    localStorage.getItem('challenge')
 
   unlock: (passphrase) ->
-    key = localStorage.getItem('key', key)
-    if @checksum(passphrase) is key
-      Clients.localStorage = new Store('clients', key)
+    if challenge(passphrase)
+      encryptionKey = @checksum(passphrase)
+      Clients.localStorage = new Store('clients', encryptionKey)
       Clients.fetch success: =>
         @unlocked = true
         @trigger('outback:unlock:success')
     else
+      @unlocked = false
       # emit failure so they can try again
-      @trigger('outback:unlock:failed')
+      @trigger('outback:unlock:failure')
 
+  lock: ->
+    # clear client storage
+    @unlocked = true
+    Clients.localStorage = null
+    @trigger('outback:unlocked:success')
+
+  challenge: (password)->
+    attempt = @checksum("challenge:#{password}")
+    challenge = localStorage.getItem('challenge')
+    attempt is challenge
+
+  
   checksum: (text)->
     new jsSHA(text, "ASCII").getHash("SHA-512", "HEX");
     

@@ -2,6 +2,7 @@ class OutbackController extends Backbone.Controller
   routes :
     "home"  : "home"
     "unlock"  : "unlock"
+    "lock"  : "lock"
     "secure"  : "secure"
     "sync&ui-state=dialog"  : "login"
     "sync"  : "sync"
@@ -17,6 +18,8 @@ class OutbackController extends Backbone.Controller
     @_views['secure'] = new SecureView
   unlock: ->
     @_views['unlock'] = new UnlockView
+  lock: ->
+    @_views['lock'] = new LockView
   sync : ->
     @_views['sync'] = new SyncView
   login : ->

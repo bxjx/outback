@@ -16,8 +16,10 @@ class OutbackView extends Backbone.View
 
   # use jquery mobile's redirect
   redirectTo: (page) ->
-    console.log('redirecting to...' + page)
-    $.mobile.changePage page
+    if page is 'home'
+      $.mobile.changePage page, null, 'reverse'
+    else
+      $.mobile.changePage page
 
   # generic dialog
   announce: (message) ->

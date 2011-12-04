@@ -41,18 +41,12 @@
 
     UserCollection.prototype.unlocked = false;
 
-    UserCollection.prototype.secured = function() {
-      return Clients.localStorage && Clients.localStorage.key;
-    };
-
     UserCollection.prototype.secure = function(passphrase) {
-      var key;
       var _this = this;
-      key = this.checksum(passphrase);
-      localStorage.setItem('key', key);
+      localStorage.setItem('challenge', this.checksum("challenge:" + passphrase));
       localStorage.setItem('clients', null);
       this.unlocked = true;
-      Clients.localStorage = new Store('clients', key);
+      Clients.localStorage = new Store('clients', this.checksum(passphrase));
       return Clients.fetch({
         success: function() {
           return _this.trigger('outback:unlock:success');
@@ -61,15 +55,15 @@
     };
 
     UserCollection.prototype.secured = function() {
-      return localStorage.getItem('key');
+      return localStorage.getItem('challenge');
     };
 
     UserCollection.prototype.unlock = function(passphrase) {
-      var key;
+      var encryptionKey;
       var _this = this;
-      key = localStorage.getItem('key', key);
-      if (this.checksum(passphrase) === key) {
-        Clients.localStorage = new Store('clients', key);
+      if (challenge(passphrase)) {
+        encryptionKey = this.checksum(passphrase);
+        Clients.localStorage = new Store('clients', encryptionKey);
         return Clients.fetch({
           success: function() {
             _this.unlocked = true;
@@ -77,8 +71,22 @@
           }
         });
       } else {
-        return this.trigger('outback:unlock:failed');
+        this.unlocked = false;
+        return this.trigger('outback:unlock:failure');
       }
+    };
+
+    UserCollection.prototype.lock = function() {
+      this.unlocked = true;
+      Clients.localStorage = null;
+      return this.trigger('outback:unlocked:success');
+    };
+
+    UserCollection.prototype.challenge = function(password) {
+      var attempt, challenge;
+      attempt = this.checksum("challenge:" + password);
+      challenge = localStorage.getItem('challenge');
+      return attempt === challenge;
     };
 
     UserCollection.prototype.checksum = function(text) {

@@ -10,12 +10,7 @@ gem 'sass'
 gem 'coffee-script'
 gem 'uglifier'
 gem 'haml'
-group :production, :staging do
-  gem "mysql2"
-end
-group :development, :test do
-  gem "sqlite3"
-end
+gem "sqlite3"
 
 gem 'jquery-rails'
 gem 'jasmine'

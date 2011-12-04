@@ -2259,6 +2259,7 @@ $.widget( "mobile.page", $.mobile.widget, {
 	// changepage function
 	$.mobile.changePage = function( to, transition, reverse, changeHash, fromHashChange ){
 		//from is always the currently viewed page
+    //console.log("going " + to + " with transition " + transition + " in " + reverse + " change " + changeHash + " from " + fromHashChange);
 		var toIsArray = $.type(to) === "array",
 			toIsObject = $.type(to) === "object",
 			from = toIsArray ? to[0] : $.mobile.activePage;
@@ -2335,8 +2336,6 @@ $.widget( "mobile.page", $.mobile.widget, {
 
 		function defaultTransition(){
 			if(transition === undefined){
-        console.log('got default trans..');
-        console.log(nextPageRole);
 				transition = ( nextPageRole && nextPageRole === 'dialog' ) ? 'pop' : $.mobile.defaultTransition;
 			}
 		}
@@ -2507,13 +2506,12 @@ $.widget( "mobile.page", $.mobile.widget, {
             }else{
               pageType = 'page';
             }
-            console.log("using.. " + pageType);
-            to = $("<div data-role='" + pageType + "' id='" + url + "' data-theme='b'>" +
+            //console.log("using.. " + pageType);
+            to = $("<div data-role='" + pageType + "' id='" + url + "' data-theme='b' data-rel='back'>" +
                 '<div data-role="header" data-theme="b">' +
                 '<h1>&nbsp;</h1>' +
                 '</div>' +
                 "<div data-role='content'></div></div>").appendTo('body');
-            //console.log("appended...");
             enhancePage();
           }
         }

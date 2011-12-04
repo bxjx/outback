@@ -15,7 +15,7 @@ class UnlockView extends OutbackView
       </div>
       <div class="ui-grid-a">
       <div class="ui-block-a">
-        <a data-role="button" href="#secure" data-theme="c">Reset Password</a>
+        <a data-role="button" href="#" data-theme="c" data-rel="back">Cancel</a>
       </div>
       <div class="ui-block-b">
         <button data-theme="b" data-role="button" type="submit" name="submit" value="submit-value">Submit</button>

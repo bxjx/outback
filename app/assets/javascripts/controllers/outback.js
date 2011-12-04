@@ -9,6 +9,7 @@
     OutbackController.prototype.routes = {
       "home": "home",
       "unlock": "unlock",
+      "lock": "lock",
       "secure": "secure",
       "sync&ui-state=dialog": "login",
       "sync": "sync",
@@ -32,6 +33,10 @@
 
     OutbackController.prototype.unlock = function() {
       return this._views['unlock'] = new UnlockView;
+    };
+
+    OutbackController.prototype.lock = function() {
+      return this._views['lock'] = new LockView;
     };
 
     OutbackController.prototype.sync = function() {
