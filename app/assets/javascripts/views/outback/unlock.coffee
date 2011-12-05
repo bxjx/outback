@@ -13,6 +13,15 @@ class UnlockView extends OutbackView
         <label for="passphrase">Password</label>
         <input type="password" value="" name="passphrase" id="passphrase"/>
       </div>
+      <div data-role="fieldcontain">
+        <label for="timeout">Lock the screen if inactive for</label>
+        <select data-theme="c" name="timeout" id="timeout">
+          <option value="1">1 minute</option>
+          <option value="5" selected="selected">5 minutes</option>
+          <option value="15">15 minutes</option>
+          <option value="30">30 minutes</option>
+        </select>
+      </div>
       <div class="ui-grid-a">
       <div class="ui-block-a">
         <a data-role="button" href="#" data-theme="c" data-rel="back">Cancel</a>
@@ -33,6 +42,7 @@ class UnlockView extends OutbackView
     @el.find('.ui-content').html(@template())
     @reapplyStyles(@el)
     @delegateEvents()
+    @reset()
   onSubmit: (e) ->
     e.preventDefault()
     e.stopPropagation()
@@ -41,7 +51,7 @@ class UnlockView extends OutbackView
     if not passphrase.match(/\D/)
       @announce('Password required')
     else
-      Users.unlock(passphrase)
+      Users.unlock(passphrase, $('#timeout').val())
 
   reset: ->
     @$('#passphrase').val('')

@@ -12,6 +12,8 @@ class OutbackController extends Backbone.Controller
   constructor: ->
     super
     @_views = {}
+    @bind 'all', =>
+      Users.logActivity()
   home : ->
     @_views['home'] = new HomeView
   secure: ->

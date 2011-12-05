@@ -41,12 +41,17 @@
 
     UserCollection.prototype.unlocked = false;
 
-    UserCollection.prototype.secure = function(passphrase) {
+    UserCollection.prototype.session_timeout_length = 0;
+
+    UserCollection.prototype.timer = null;
+
+    UserCollection.prototype.secure = function(passphrase, timeout) {
       var _this = this;
       localStorage.setItem('challenge', this.checksum("challenge:" + passphrase));
       localStorage.setItem('clients', null);
       this.unlocked = true;
       Clients.localStorage = new Store('clients', this.checksum(passphrase));
+      this.setLockTimer(timeout);
       return Clients.fetch({
         success: function() {
           return _this.trigger('outback:unlock:success');
@@ -58,10 +63,11 @@
       return localStorage.getItem('challenge');
     };
 
-    UserCollection.prototype.unlock = function(passphrase) {
+    UserCollection.prototype.unlock = function(passphrase, timeout) {
       var encryptionKey;
       var _this = this;
-      if (challenge(passphrase)) {
+      if (this.challenge(passphrase)) {
+        this.setLockTimer(timeout);
         encryptionKey = this.checksum(passphrase);
         Clients.localStorage = new Store('clients', encryptionKey);
         return Clients.fetch({
@@ -76,10 +82,44 @@
       }
     };
 
+    UserCollection.prototype.setLockTimer = function(timeout) {
+      var minutes;
+      minutes = parseInt(timeout);
+      if (minutes < 1 || minutes > 30) minutes = 5;
+      this.session_timeout_length = minutes * 60000;
+      this.clearTimer();
+      this.logActivity();
+      return this.checkAutoLock();
+    };
+
+    UserCollection.prototype.logActivity = function() {
+      return this.activity = new Date().getTime();
+    };
+
+    UserCollection.prototype.clearTimer = function() {
+      if (this.timer) return window.clearInterval(this.timer);
+    };
+
+    UserCollection.prototype.checkAutoLock = function() {
+      var logOutWrapper, now;
+      var _this = this;
+      now = new Date().getTime();
+      if ((this.activity + this.session_timeout_length) < now) {
+        return this.lock();
+      } else {
+        logOutWrapper = function() {
+          return _this.checkAutoLock();
+        };
+        this.clearTimer();
+        return this.timer = window.setInterval(logOutWrapper, 5000);
+      }
+    };
+
     UserCollection.prototype.lock = function() {
-      this.unlocked = true;
+      this.clearTimer();
+      this.unlocked = false;
       Clients.localStorage = null;
-      return this.trigger('outback:unlocked:success');
+      return this.trigger('outback:lock:success');
     };
 
     UserCollection.prototype.challenge = function(password) {

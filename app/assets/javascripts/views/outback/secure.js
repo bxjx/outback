@@ -17,7 +17,7 @@
         _this.announce('Outback is now secure');
         return _this.redirectTo('home');
       });
-      this.template = _.template('<form action="#secure" method="post">\n  <p>Enter a passphrase to secure Outback. Do <strong>not</strong> use your Bridge or ESS password!</p>\n  <div data-role="fieldcontain">\n    <label for="passphrase">Password</label>\n    <input type="password" value="" name="passphrase" id="passphrase"/>\n  </div>\n  <div data-role="fieldcontain">\n    <label for="passphrase_confirmation">Confirm Password</label>\n    <input type="password" value="" name="passphrase_confirmation" id="passphrase_confirmation"/>\n  </div>\n  <div class="ui-grid-a">\n  <div class="ui-block-a">\n    <a data-role="button" href="#" data-theme="c" data-rel="back">Cancel</a>\n  </div>\n  <div class="ui-block-b">\n    <button data-theme="b" data-role="button" type="submit" name="submit" value="submit-value">Submit</button>\n  </div>\n  </div>\n</form>');
+      this.template = _.template('<form action="#secure" method="post">\n  <p>Enter a passphrase to secure Outback. Do <strong>not</strong> use your Bridge or ESS password!</p>\n  <div data-role="fieldcontain">\n    <label for="timeout">Lock the screen if inactive for</label>\n    <select data-theme="c" name="timeout" id="timeout">\n      <option value="1">1 minute</option>\n      <option value="5" selected="selected">5 minutes</option>\n      <option value="15">15 minutes</option>\n      <option value="30">30 minutes</option>\n    </select>\n  </div>\n  <div data-role="fieldcontain">\n    <label for="passphrase">Password</label>\n    <input type="password" value="" name="passphrase" id="passphrase"/>\n  </div>\n  <div data-role="fieldcontain">\n    <label for="passphrase_confirmation">Confirm Password</label>\n    <input type="password" value="" name="passphrase_confirmation" id="passphrase_confirmation"/>\n  </div>\n  <div class="ui-grid-a">\n  <div class="ui-block-a">\n    <a data-role="button" href="#" data-theme="c" data-rel="back">Cancel</a>\n  </div>\n  <div class="ui-block-b">\n    <button data-theme="b" data-role="button" type="submit" name="submit" value="submit-value">Submit</button>\n  </div>\n  </div>\n</form>');
       this.render();
     }
 
@@ -47,7 +47,7 @@
           return this.announce('Outback passwords do not match!');
         } else {
           this.reset();
-          return Users.secure(passphrase);
+          return Users.secure(passphrase, this.$('#timeout').val());
         }
       }
     };

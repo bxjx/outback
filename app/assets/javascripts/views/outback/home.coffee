@@ -1,6 +1,8 @@
 class HomeView extends OutbackView
   constructor: ->
     super
+    Users.bind 'outback:lock:success', =>
+      @render()
     @template = _.template('''
     <ul data-role="listview" data-inset="true">
       <li data-role="list-divider">Account and Sync</li>

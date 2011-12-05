@@ -28,6 +28,6 @@ class LockView extends OutbackView
     e.preventDefault()
     e.stopPropagation()
     $.mobile.pageLoading()
-    User.lock()
+    Users.lock()
 
 this.LockView = LockView

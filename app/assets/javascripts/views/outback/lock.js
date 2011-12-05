@@ -28,7 +28,7 @@
       e.preventDefault();
       e.stopPropagation();
       $.mobile.pageLoading();
-      return User.lock();
+      return Users.lock();
     };
 
     return LockView;

@@ -19,8 +19,12 @@
     };
 
     function OutbackController() {
+      var _this = this;
       OutbackController.__super__.constructor.apply(this, arguments);
       this._views = {};
+      this.bind('all', function() {
+        return Users.logActivity();
+      });
     }
 
     OutbackController.prototype.home = function() {

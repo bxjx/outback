@@ -7,8 +7,16 @@
     __extends(OutbackView, Backbone.View);
 
     function OutbackView() {
-      OutbackView.__super__.constructor.apply(this, arguments);
+      var _this = this;
+      Users.bind('outback:lock:success', function() {
+        _this.announce("Locking");
+        return _this.redirectTo('home');
+      });
     }
+
+    OutbackView.prototype.logActivity = function() {
+      return Users.logActivity();
+    };
 
     OutbackView.prototype.activePage = function() {
       return $(".ui-page-active");
@@ -20,6 +28,7 @@
       el.find('button[data-role="button"],a[data-role="button"]').button();
       el.find('input,textarea').textinput();
       el.find('div[data-role="collapsible"]').collapsible();
+      el.find('select').selectmenu();
       return el.page();
     };
 

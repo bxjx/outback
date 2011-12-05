@@ -11,6 +11,15 @@ class SecureView extends OutbackView
     <form action="#secure" method="post">
       <p>Enter a passphrase to secure Outback. Do <strong>not</strong> use your Bridge or ESS password!</p>
       <div data-role="fieldcontain">
+        <label for="timeout">Lock the screen if inactive for</label>
+        <select data-theme="c" name="timeout" id="timeout">
+          <option value="1">1 minute</option>
+          <option value="5" selected="selected">5 minutes</option>
+          <option value="15">15 minutes</option>
+          <option value="30">30 minutes</option>
+        </select>
+      </div>
+      <div data-role="fieldcontain">
         <label for="passphrase">Password</label>
         <input type="password" value="" name="passphrase" id="passphrase"/>
       </div>
@@ -51,7 +60,7 @@ class SecureView extends OutbackView
         @announce('Outback passwords do not match!')
       else
         @reset()
-        Users.secure(passphrase)
+        Users.secure(passphrase, @$('#timeout').val())
 
   reset: ->
     @$('#passphrase').val('')

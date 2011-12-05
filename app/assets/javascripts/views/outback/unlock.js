@@ -16,7 +16,7 @@
       Users.bind('outback:unlock:failure', function() {
         return _this.announce('Unlock failed. Please try again.');
       });
-      this.template = _.template('<form action="#unlock" method="post">\n  <p>Enter your Outback password:</p>\n  <div data-role="fieldcontain">\n    <label for="passphrase">Password</label>\n    <input type="password" value="" name="passphrase" id="passphrase"/>\n  </div>\n  <div class="ui-grid-a">\n  <div class="ui-block-a">\n    <a data-role="button" href="#" data-theme="c" data-rel="back">Cancel</a>\n  </div>\n  <div class="ui-block-b">\n    <button data-theme="b" data-role="button" type="submit" name="submit" value="submit-value">Submit</button>\n  </div>\n  </div>\n</form>');
+      this.template = _.template('<form action="#unlock" method="post">\n  <p>Enter your Outback password:</p>\n  <div data-role="fieldcontain">\n    <label for="passphrase">Password</label>\n    <input type="password" value="" name="passphrase" id="passphrase"/>\n  </div>\n  <div data-role="fieldcontain">\n    <label for="timeout">Lock the screen if inactive for</label>\n    <select data-theme="c" name="timeout" id="timeout">\n      <option value="1">1 minute</option>\n      <option value="5" selected="selected">5 minutes</option>\n      <option value="15">15 minutes</option>\n      <option value="30">30 minutes</option>\n    </select>\n  </div>\n  <div class="ui-grid-a">\n  <div class="ui-block-a">\n    <a data-role="button" href="#" data-theme="c" data-rel="back">Cancel</a>\n  </div>\n  <div class="ui-block-b">\n    <button data-theme="b" data-role="button" type="submit" name="submit" value="submit-value">Submit</button>\n  </div>\n  </div>\n</form>');
       this.render();
     }
 
@@ -29,7 +29,8 @@
       this.el.find('h1').html('Unlock Outback');
       this.el.find('.ui-content').html(this.template());
       this.reapplyStyles(this.el);
-      return this.delegateEvents();
+      this.delegateEvents();
+      return this.reset();
     };
 
     UnlockView.prototype.onSubmit = function(e) {
@@ -41,7 +42,7 @@
       if (!passphrase.match(/\D/)) {
         return this.announce('Password required');
       } else {
-        return Users.unlock(passphrase);
+        return Users.unlock(passphrase, $('#timeout').val());
       }
     };
 

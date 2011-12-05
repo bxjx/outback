@@ -1,5 +1,13 @@
 # Super class for outback views with various jquery mobile helpers
 class OutbackView extends Backbone.View
+
+  constructor: ->
+    Users.bind 'outback:lock:success', =>
+      @announce("Locking")
+      @redirectTo('home')
+  
+  logActivity: ->
+    Users.logActivity()
  
   # The jquery mobile "page" that is currently being displayed
   activePage: ->
@@ -12,6 +20,7 @@ class OutbackView extends Backbone.View
     el.find('button[data-role="button"],a[data-role="button"]').button()
     el.find('input,textarea').textinput()
     el.find('div[data-role="collapsible"]').collapsible()
+    el.find('select').selectmenu()
     el.page()
 
   # use jquery mobile's redirect
