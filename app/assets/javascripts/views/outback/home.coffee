@@ -6,7 +6,7 @@ class HomeView extends OutbackView
     @template = _.template('''
     <ul data-role="listview" data-inset="true">
       <li data-role="list-divider">Account and Sync</li>
-      <% if (Users.unlocked){ %>
+      <% if (Users.unlocked()){ %>
         <li><a href="#sync">Sync with Bridge</a></li>
         <li><a href="#lock">Lock</a></li>
         <li data-role="list-divider">Caseload</li>

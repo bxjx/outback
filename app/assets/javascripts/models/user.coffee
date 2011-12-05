@@ -16,7 +16,7 @@ class UserCollection extends Backbone.Collection
   currentUser: false
 
   # true if outback data has been successfully unlocked and decrypted
-  unlocked: false
+  locked: true
   
   # Milliseconds of inactivity until the session is locked
   session_timeout_length: 0
@@ -24,12 +24,15 @@ class UserCollection extends Backbone.Collection
   # Rerence to session timeout timer
   timer: null
 
+  unlocked: ->
+    @locked
+
   # Set up an encrypted localStorage with the passphrase. All existing data
   # will be lost
   secure: (passphrase, timeout) ->
     localStorage.setItem('challenge', @checksum("challenge:#{passphrase}"))
     localStorage.setItem('clients', null)
-    @unlocked = true
+    @locked = false
     Clients.localStorage = new Store('clients', @checksum(passphrase))
     @setLockTimer(timeout)
     Clients.fetch success: =>
@@ -44,10 +47,10 @@ class UserCollection extends Backbone.Collection
       encryptionKey = @checksum(passphrase)
       Clients.localStorage = new Store('clients', encryptionKey)
       Clients.fetch success: =>
-        @unlocked = true
+        @locked = false
         @trigger('outback:unlock:success')
     else
-      @unlocked = false
+      @locked = true
       # emit failure so they can try again
       @trigger('outback:unlock:failure')
 
@@ -83,7 +86,7 @@ class UserCollection extends Backbone.Collection
   lock: ->
     # clear client storage
     @clearTimer()
-    @unlocked = false
+    @locked = true
     Clients.localStorage = null
     @trigger('outback:lock:success')
 

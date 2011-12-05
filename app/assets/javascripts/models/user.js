@@ -39,17 +39,21 @@
 
     UserCollection.prototype.currentUser = false;
 
-    UserCollection.prototype.unlocked = false;
+    UserCollection.prototype.locked = true;
 
     UserCollection.prototype.session_timeout_length = 0;
 
     UserCollection.prototype.timer = null;
 
+    UserCollection.prototype.unlocked = function() {
+      return this.locked;
+    };
+
     UserCollection.prototype.secure = function(passphrase, timeout) {
       var _this = this;
       localStorage.setItem('challenge', this.checksum("challenge:" + passphrase));
       localStorage.setItem('clients', null);
-      this.unlocked = true;
+      this.locked = false;
       Clients.localStorage = new Store('clients', this.checksum(passphrase));
       this.setLockTimer(timeout);
       return Clients.fetch({
@@ -72,12 +76,12 @@
         Clients.localStorage = new Store('clients', encryptionKey);
         return Clients.fetch({
           success: function() {
-            _this.unlocked = true;
+            _this.locked = false;
             return _this.trigger('outback:unlock:success');
           }
         });
       } else {
-        this.unlocked = false;
+        this.locked = true;
         return this.trigger('outback:unlock:failure');
       }
     };
@@ -117,7 +121,7 @@
 
     UserCollection.prototype.lock = function() {
       this.clearTimer();
-      this.unlocked = false;
+      this.locked = true;
       Clients.localStorage = null;
       return this.trigger('outback:lock:success');
     };
