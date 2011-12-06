@@ -10,6 +10,7 @@ Outback::Application.routes.draw do
        collection do
           get 'auth'
           post 'auth'
+          get 'ping'
         end
       end
       resources :clients do

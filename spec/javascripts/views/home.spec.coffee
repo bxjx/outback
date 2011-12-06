@@ -2,7 +2,7 @@ describe "HomeView", ->
 
   beforeEach ->
     @mock = sinon.mock(Users)
-    $('body').append('<div class="ui-page-active"><div class="ui-content"></div></div>')
+    $('body').append('<div id="home" class="ui-page-active"><div class="ui-content"></div></div>')
 
   describe "when outback is locked and there is no secure data", ->
 
@@ -56,6 +56,7 @@ describe "HomeView", ->
       @mock.expects("unlocked").returns(true)
       @view = new HomeView()
       @mock.verify()
+      @mock = sinon.mock(Users)
       @mock.expects("unlocked").returns(false).atLeast(1)
       @mock.expects("secured").returns(true).atLeast(1)
       Users.trigger('outback:lock:success')

@@ -25,6 +25,7 @@ class Api::V1::ClientsController < ApplicationController
       end
       Rails.cache.write('clients', fake_clients)
     end
+    sleep(5)
     render :json => get_fake_clients
   end
 

@@ -21,7 +21,7 @@
       Users.bind('auth:error', function() {
         return _this.announce('Error. Please try again later');
       });
-      this.template = _.template('<form action="#login" method="post">\n  <div data-role="fieldcontain">\n    <label for="login">Login (e.g. EX2003)</label>\n    <input type="text" value="" name="login" id="login"/>\n  </div>\n  <div data-role="fieldcontain">\n    <label for="password">Password</label>\n    <input type="password" value="" name="password" id="password"/>\n  </div>\n  <div class="ui-grid-a">\n  <div class="ui-block-a">\n    <a data-role="button" href="#" data-theme="c" data-rel="back">Cancel</a>\n  </div>\n  <div class="ui-block-b">\n    <button data-theme="b" data-role="button" type="submit" name="submit" value="submit-value">Submit</button>\n  </div>\n  </div>\n</form>');
+      this.template = _.template('<form action="#login" method="post">\n  <div data-role="fieldcontain">\n    <label for="login">Login (e.g. EX2003)</label>\n    <input type="text" value="" name="login" id="login"/>\n  </div>\n  <div data-role="fieldcontain">\n    <label for="password">Password</label>\n    <input type="password" value="" name="password" id="password"/>\n  </div>\n  <div class="ui-grid-a">\n  <div class="ui-block-a">\n    <a data-role="button" href="#" data-theme="c" data-rel="back">Cancel</a>\n  </div>\n  <div class="ui-block-b">\n    <button data-theme="b" data-role="button" type="submit" name="submit" value="submit-value">Submit</button>\n </div>\n  </div>\n</form>');
       this.render();
     }
 

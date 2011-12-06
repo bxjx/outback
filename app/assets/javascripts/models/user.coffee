@@ -15,7 +15,7 @@ class UserCollection extends Backbone.Collection
   # User who has been authenticated with Bridge
   currentUser: false
 
-  # true if outback data has been successfully unlocked and decrypted
+  # False if outback data has been successfully unlocked and decrypted
   locked: true
   
   # Milliseconds of inactivity until the session is locked
@@ -24,11 +24,25 @@ class UserCollection extends Backbone.Collection
   # Rerence to session timeout timer
   timer: null
 
+  # test if the user has unlocked outback. Outback is always locked when
+  # initially loaded
   unlocked: ->
-    @locked
+    !@locked
 
+  # Test if the app is online. Emits outback:offline and outback:online
+  testIfOnline: ->
+    # only trust navigator.onLine if it false
+    if not navigator.onLine
+      @trigger('outback:offline') 
+    else
+      $.ajax '/api/v1/users/ping',
+        success: (data) =>
+          @trigger('outback:online')
+        error: (jqXHR, textStatus) =>
+          @trigger('outback:offline')
+    
   # Set up an encrypted localStorage with the passphrase. All existing data
-  # will be lost
+  # will be lost. Emits outback:unlock:success when completed.
   secure: (passphrase, timeout) ->
     localStorage.setItem('challenge', @checksum("challenge:#{passphrase}"))
     localStorage.setItem('clients', null)
@@ -38,9 +52,11 @@ class UserCollection extends Backbone.Collection
     Clients.fetch success: =>
       @trigger('outback:unlock:success')
 
+  # Tests if there is any secured data stored in the local storage
   secured: ->
     localStorage.getItem('challenge')
 
+  # Attempts to unlock outback with the given passphrase
   unlock: (passphrase, timeout) ->
     if @challenge(passphrase)
       @setLockTimer(timeout)
@@ -96,7 +112,7 @@ class UserCollection extends Backbone.Collection
     attempt is challenge
   
   checksum: (text)->
-    new jsSHA(text, "ASCII").getHash("SHA-512", "HEX");
+    new jsSHA(text, "ASCII").getHash("SHA-512", "HEX")
 
   # Attempt to authenicate the login/password with Bridge. It triggers auth:*
   # events depending on the result

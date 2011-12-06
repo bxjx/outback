@@ -25,7 +25,7 @@ class LoginView extends OutbackView
       </div>
       <div class="ui-block-b">
         <button data-theme="b" data-role="button" type="submit" name="submit" value="submit-value">Submit</button>
-      </div>
+     </div>
       </div>
     </form>
     ''')

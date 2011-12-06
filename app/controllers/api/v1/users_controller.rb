@@ -6,4 +6,9 @@ class Api::V1::UsersController < ApplicationController
       render :json => {}, :status => 401
     end
   end
+
+  def ping
+    sleep(5)
+    render :text => 'pong'
+  end
 end

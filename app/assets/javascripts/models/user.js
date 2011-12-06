@@ -46,7 +46,23 @@
     UserCollection.prototype.timer = null;
 
     UserCollection.prototype.unlocked = function() {
-      return this.locked;
+      return !this.locked;
+    };
+
+    UserCollection.prototype.testIfOnline = function() {
+      var _this = this;
+      if (!navigator.onLine) {
+        return this.trigger('outback:offline');
+      } else {
+        return $.ajax('/api/v1/users/ping', {
+          success: function(data) {
+            return _this.trigger('outback:online');
+          },
+          error: function(jqXHR, textStatus) {
+            return _this.trigger('outback:offline');
+          }
+        });
+      }
     };
 
     UserCollection.prototype.secure = function(passphrase, timeout) {
