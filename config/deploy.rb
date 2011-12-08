@@ -1,10 +1,3 @@
-before :"deploy:symlink", :"deploy:assets"
-
-desc "Compile asets"
-task :assets do
-  run "cd #{release_path}; RAILS_ENV=#{rails_env} bundle exec rake assets:precompile"
-end
-
 require 'capistrano/ext/multistage'
 
 set :stages, %w(training production)
@@ -18,12 +11,17 @@ role :db,  "outback1", :primary => true
 set :user, "rails"
 set :use_sudo, false
 
-# If you are using Passenger mod_rails uncomment this:
+before :"deploy:symlink", :"deploy:assets"
+
 namespace :deploy do
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{File.join(current_path,'tmp','restart.txt')}"
+  end
+  desc "Compile asets"
+  task :assets do
+    run "cd #{release_path}; RAILS_ENV=#{rails_env} bundle exec rake assets:precompile"
   end
 end
 
