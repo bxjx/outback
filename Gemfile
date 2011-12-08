@@ -16,6 +16,9 @@ gem 'jquery-rails'
 gem 'jasmine'
 gem 'uglifier'
 
+gem 'capistrano'
+gem 'capistrano-ext'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
