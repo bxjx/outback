@@ -2,13 +2,13 @@ before :"deploy:symlink", :"deploy:assets"
 
 desc "Compile asets"
 task :assets do
-  run "cd #{release_path}; RAILS_ENV=#{rails_env} bundle exec rake assets:precompile"
+  #run "cd #{release_path}; RAILS_ENV=#{rails_env} bundle exec rake assets:precompile"
 end
 
 require 'capistrano/ext/multistage'
 
 set :stages, %w(training production)
-set :default_stage, "training"
+set :default_stage, "production"
 set :application, "outback"
 set :repository,  "gitosis@scm:outback.git"
 set :scm, :git

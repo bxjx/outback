@@ -10,7 +10,7 @@ gem 'sass'
 gem 'coffee-script'
 gem 'uglifier'
 gem 'haml'
-gem "sqlite3"
+gem "mysql2"
 
 gem 'jquery-rails'
 gem 'jasmine'
