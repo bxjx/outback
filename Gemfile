@@ -18,6 +18,7 @@ gem 'uglifier'
 
 gem 'capistrano'
 gem 'capistrano-ext'
+gem 'faker'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -35,8 +36,4 @@ end
 
 group :production do
   gem 'therubyracer'
-end
-
-group :test, :development do
-  gem 'faker'
 end
