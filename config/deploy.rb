@@ -1,4 +1,4 @@
-#before :"deploy:symlink", :"deploy:assets"
+before :"deploy:symlink", :"deploy:assets"
 
 desc "Compile asets"
 task :assets do
