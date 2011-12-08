@@ -10,7 +10,7 @@ require 'capistrano/ext/multistage'
 set :stages, %w(training production)
 set :default_stage, "training"
 set :application, "outback"
-set :repository,  "gitosis@git:outback.git"
+set :repository,  "gitosis@scm:outback.git"
 set :scm, :git
 role :web, "outback1"
 role :app, "outback1"
