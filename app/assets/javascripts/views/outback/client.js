@@ -29,6 +29,8 @@
     ClientView.prototype.formattedDate = function(date) {
       if (/Z$/.test(date)) {
         return date;
+      } else if (typeof date === 'string' && /\+/.test(date)) {
+        return this.isoDate(new Date(date));
       } else {
         return this.isoDate(date);
       }

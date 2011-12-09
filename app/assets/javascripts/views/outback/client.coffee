@@ -47,7 +47,12 @@ class ClientView extends OutbackView
     $("abbrev.timeago").timeago()
     @reapplyStyles(@el)
   formattedDate: (date) ->
-    if /Z$/.test(date) then date else @isoDate(date)
+    if /Z$/.test(date) # iso
+      date 
+    else if typeof(date) == 'string' and /\+/.test(date) # gmt
+      @isoDate(new Date(date))
+    else
+      @isoDate(date)
 
 
 this.ClientView = ClientView
