@@ -17,6 +17,7 @@ function guid() {
 var Store = function(name, key) {
   this.name = name;
   this.key = key;
+  this.inBatchSave = false;
   var store = localStorage.getItem(this.name);
   if (this.key){
     try{
@@ -34,7 +35,9 @@ _.extend(Store.prototype, {
   // Save the current state of the **Store** to *localStorage*.
   save: function() {
     if (this.key){
-      localStorage.setItem(this.name, $.jCryption.encrypt(JSON.stringify(this.data), this.key));
+      if (!this.inBatchSave){
+        localStorage.setItem(this.name, $.jCryption.encrypt(JSON.stringify(this.data), this.key));
+      }
     }
   },
 
@@ -75,6 +78,23 @@ _.extend(Store.prototype, {
   destroyAll: function(model) {
     this.data = {};
     this.save();
+  },
+
+  // Start a batch save
+  queueSaves: function() {
+    this.inBatchSave = true;
+  },
+
+  // Start a batch save
+  processQueuedSaves: function() {
+    this.inBatchSave = false;
+    this.save();
+  },
+
+  clearQueue: function() {
+    this.inBatchSave = false;
+    this.data = {};
+    this.save();
   }
 
 });
@@ -99,3 +119,18 @@ Backbone.localSync = function(method, model, success, error) {
     error("Record not found");
   }
 };
+
+_.extend(Backbone.localSync, {
+
+  queueSaves: function(collection){
+    collection.localStorage.queueSaves();
+  },
+
+  processQueuedSaves: function(collection){
+    collection.localStorage.processQueuedSaves();
+  },
+
+  clearQueue: function(collection){
+    collection.localStorage.clearQueue();
+  }
+});

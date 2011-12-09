@@ -21,5 +21,8 @@ out with the project. We're always looking for talented programmers.
 
 ### General todo:
 
-* get back transition right
-* force timeout on login
+* handle 500 on caseload
+* add web worker for import
+* add delete data
+* add confirmation that they are deleteing the local data
+* add modernizer for testing support

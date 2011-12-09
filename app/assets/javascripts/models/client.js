@@ -63,6 +63,8 @@
           var chainedSaves, models;
           models = _this.models;
           _this.sync = Backbone.localSync;
+          window.syncer = _this.sync;
+          _this.sync.queueSaves(Clients);
           chainedSaves = _this.map(function(model) {
             return function(callback) {
               var save_callbacks;
@@ -78,6 +80,7 @@
             };
           });
           return async.parallel(chainedSaves, function() {
+            _this.sync.processQueuedSaves(Clients);
             Users.currentUser.syncing = false;
             Users.currentUser.lastSync = new Date();
             Users.currentUser.lastSyncStatus = 'success';
@@ -85,7 +88,8 @@
           });
         },
         error: function() {
-          return _this.sync = Backbone.localSync;
+          _this.sync = Backbone.localSync;
+          return _this.sync.clearQueue(Clients);
         }
       };
       if (this.any()) {

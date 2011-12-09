@@ -34,6 +34,8 @@ class ClientCollection extends Backbone.Collection
       success: =>
         models = @models
         @sync = Backbone.localSync
+        window.syncer = @sync
+        @sync.queueSaves(Clients)
         chainedSaves =  @map (model) ->
           # return a callback to be used by parallel
           (callback) ->
@@ -44,12 +46,14 @@ class ClientCollection extends Backbone.Collection
                 callback(error)
             model.save null, save_callbacks
         async.parallel chainedSaves, =>
+          @sync.processQueuedSaves(Clients)
           Users.currentUser.syncing = false
           Users.currentUser.lastSync = new Date()
           Users.currentUser.lastSyncStatus = 'success'
           @trigger('clients:synced')
       error: =>
         @sync = Backbone.localSync
+        @sync.clearQueue(Clients)
     if @any()
       @fetchWithUpdate(callbacks)
     else

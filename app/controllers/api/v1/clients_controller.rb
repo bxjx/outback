@@ -53,7 +53,7 @@ class Api::V1::ClientsController < ApplicationController
   end
 
   def populate_fake_clients
-    Rails.cache.write('clients', (1..rand(20)).map{|i| fake_client(i)})
+    Rails.cache.write('clients', (1..500).map{|i| fake_client(i)})
   end
 
   def fake_client(id)
@@ -78,10 +78,9 @@ class Api::V1::ClientsController < ApplicationController
       :in_work_experience? => in_work_experience,
       :work_experience_summary => (in_work_experience ? "Placed 21/12/2011" : nil),
       :activity_tested? => [true,false].sample,
-      :contacts => [
-        {:notes => Faker::Lorem.paragraph, :created_at => 6.days.ago, :synced => true, :user_name => Faker::Name.name},
-        {:notes => Faker::Lorem.paragraph, :created_at => 12.days.ago, :synced => true, :user_name => Faker::Name.name}
-      ]
+      :contacts => rand(20).times.map{|number|
+        {:notes => Faker::Lorem.paragraph, :created_at => number.days.ago, :synced => true, :user_name => Faker::Name.name}
+      }
     }
   end
 end
