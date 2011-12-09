@@ -1,12 +1,7 @@
 Outback::Application.routes.draw do
 
-  # Serve off subdirectory if set
-  scope ENV['RAILS_RELATIVE_URL_ROOT'] || '/' do
-
-    root :to => 'outback#index'
-    match '/manifest', {:controller => 'outback', :action =>'manifest'}
-
-  end
+  root :to => 'outback#index'
+  match '/manifest', {:controller => 'outback', :action =>'manifest'}
 
   namespace :api do
     namespace :v1 do
