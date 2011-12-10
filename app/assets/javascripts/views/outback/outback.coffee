@@ -4,14 +4,14 @@ class OutbackView extends Backbone.View
   constructor: ->
     Users.bind 'outback:lock:success', =>
       @announce("Locking")
-      @redirectTo('home')
+      @restart()
   
   logActivity: ->
     Users.logActivity()
  
-  # The jquery mobile "page" that is currently being displayed
+  # the current page
   activePage: ->
-    $(".ui-page-active")
+    $("##{@page}")
 
   # Reapply the jquery mobile behaviours to the newly created page
   reapplyStyles: (el) ->
@@ -48,6 +48,8 @@ class OutbackView extends Backbone.View
 
   # restart the application by reloading the page
   restart: ->
-    window.location = window.location.href.replace(/#.*/, '')
+    # destroy all pages in the dom just in case they use back button
+    $('.ui-page').remove()
+    window.location = '/' 
 
 this.OutbackView = OutbackView

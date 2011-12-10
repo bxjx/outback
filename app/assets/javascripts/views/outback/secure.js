@@ -9,6 +9,7 @@
     function SecureView() {
       var _this = this;
       SecureView.__super__.constructor.apply(this, arguments);
+      this.page = 'secure';
       Users.bind('outback:unlock:failure', function() {
         $.mobile.pageLoading(true);
         return _this.announce('The password is not correct. Please try again or reset your password');

@@ -1,6 +1,7 @@
 class ResetView extends OutbackView
   constructor: ->
     super
+    @page = 'reset'
     Users.bind 'outback:reset', =>
       @restart()
     @template = _.template('''

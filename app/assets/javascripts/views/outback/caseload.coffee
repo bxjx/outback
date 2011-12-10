@@ -1,6 +1,10 @@
 class CaseloadView extends OutbackView
   constructor: ->
     super
+    @page = 'caseload'
+    @cached_html = null
+    Clients.bind 'clients:synced', =>
+      @cached_html = null
     @template = _.template('''
 		<ul data-role="listview" data-filter="true">
       <% clients.each(function(client){ %>
@@ -8,10 +12,11 @@ class CaseloadView extends OutbackView
       <% }); %>
     </ul>
     ''')
-    @render()
   render: =>
     @el = @activePage()
-    @el.find('.ui-content').html(@template({clients: Clients}))
+    if not @cached_html
+      @cached_html = @template({clients: Clients})
+      @el.find('.ui-content').html(@cached_html)
     @reapplyStyles(@el)
 
 this.CaseloadView = CaseloadView

@@ -10,6 +10,7 @@
       this.render = __bind(this.render, this);
       var _this = this;
       HomeView.__super__.constructor.apply(this, arguments);
+      this.page = 'home';
       Users.bind('outback:lock:success', function() {
         return _this.render();
       });

@@ -35,7 +35,7 @@
 $(document).ready ->
   # jQuery mobile doesn't really handle deep linking too well
   if window.location.href.match(/#/)
-    window.location = window.location.href.replace(/#.*/, '')
+    window.location = '/'
   else
     $.mobile.pageLoading()
     $(window.applicationCache).bind 'updateready', ->

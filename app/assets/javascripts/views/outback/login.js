@@ -9,6 +9,7 @@
     function LoginView() {
       var _this = this;
       LoginView.__super__.constructor.apply(this, arguments);
+      this.page = 'login';
       Users.bind('auth:unauthorised', function() {
         return _this.announce('Authentication failed. Please try again');
       });

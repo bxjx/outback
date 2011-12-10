@@ -1,6 +1,7 @@
 class UnlockView extends OutbackView
   constructor: ->
     super
+    @page = 'unlock'
     Users.bind 'outback:unlock:success', =>
       @announce('Unlocked')
       @redirectTo('home')

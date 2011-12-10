@@ -9,6 +9,7 @@
     function ResetView() {
       var _this = this;
       ResetView.__super__.constructor.apply(this, arguments);
+      this.page = 'reset';
       Users.bind('outback:reset', function() {
         return _this.restart();
       });

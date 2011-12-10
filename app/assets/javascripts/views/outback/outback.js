@@ -10,7 +10,7 @@
       var _this = this;
       Users.bind('outback:lock:success', function() {
         _this.announce("Locking");
-        return _this.redirectTo('home');
+        return _this.restart();
       });
     }
 
@@ -19,7 +19,7 @@
     };
 
     OutbackView.prototype.activePage = function() {
-      return $(".ui-page-active");
+      return $("#" + this.page);
     };
 
     OutbackView.prototype.reapplyStyles = function(el) {
@@ -64,7 +64,8 @@
     };
 
     OutbackView.prototype.restart = function() {
-      return window.location = window.location.href.replace(/#.*/, '');
+      $('.ui-page').remove();
+      return window.location = '/';
     };
 
     return OutbackView;

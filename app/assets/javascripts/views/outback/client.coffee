@@ -1,6 +1,7 @@
 class ClientView extends OutbackView
   constructor: (client) ->
     super
+    @page = "client-#{client.id}"
     # hmmm.. could this go wrong if update on model comes while not looking at
     # the view for this client?
     client.bind 'change', (changed_client) =>

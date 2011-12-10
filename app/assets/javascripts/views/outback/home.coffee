@@ -1,6 +1,7 @@
 class HomeView extends OutbackView
   constructor: ->
     super
+    @page = 'home'
     Users.bind 'outback:lock:success', =>
       @render()
     @template = _.template('''

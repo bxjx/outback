@@ -33,15 +33,18 @@
     };
 
     OutbackController.prototype.secure = function() {
-      return this._views['secure'] = new SecureView;
+      var _base;
+      return (_base = this._views)['secure'] || (_base['secure'] = new SecureView);
     };
 
     OutbackController.prototype.unlock = function() {
-      return this._views['unlock'] = new UnlockView;
+      var _base;
+      return (_base = this._views)['unlock'] || (_base['unlock'] = new UnlockView);
     };
 
     OutbackController.prototype.lock = function() {
-      return this._views['lock'] = new LockView;
+      var _base;
+      return (_base = this._views)['lock'] || (_base['lock'] = new LockView);
     };
 
     OutbackController.prototype.sync = function() {
@@ -53,7 +56,9 @@
     };
 
     OutbackController.prototype.caseload = function() {
-      return this._views['caseload'] = new CaseloadView;
+      var _base;
+      (_base = this._views)['caseload'] || (_base['caseload'] = new CaseloadView);
+      return this._views['caseload'].render();
     };
 
     OutbackController.prototype.client = function(id) {
@@ -65,7 +70,8 @@
     };
 
     OutbackController.prototype.reset = function(id) {
-      return this._views['reset'] = new ResetView;
+      var _base;
+      return (_base = this._views)['reset'] || (_base['reset'] = new ResetView);
     };
 
     return OutbackController;

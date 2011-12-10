@@ -10,6 +10,7 @@
       this.render = __bind(this.render, this);
       var _this = this;
       ClientView.__super__.constructor.apply(this, arguments);
+      this.page = "client-" + client.id;
       client.bind('change', function(changed_client) {
         return _this.render(changed_client);
       });

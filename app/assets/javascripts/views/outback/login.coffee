@@ -1,6 +1,7 @@
 class LoginView extends OutbackView
   constructor: ->
     super
+    @page = 'login'
     Users.bind 'auth:unauthorised', =>
       @announce('Authentication failed. Please try again')
     Users.bind 'auth:timeout', =>

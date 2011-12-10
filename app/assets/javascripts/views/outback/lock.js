@@ -8,6 +8,7 @@
 
     function LockView() {
       LockView.__super__.constructor.apply(this, arguments);
+      this.page = 'lock';
       this.template = _.template('<form action="#unlock" method="post">\n  <p>Lock Outback to secure your caseload data</p>\n  <div class="ui-grid-a">\n  <div class="ui-block-a">\n    <a data-role="button" href="#" data-theme="c" data-rel="back">Cancel</a>\n  </div>\n  <div class="ui-block-b">\n    <button data-theme="b" data-role="button" type="submit" name="submit" value="submit-value">Lock</button>\n  </div>\n  </div>\n</form>');
       this.render();
     }

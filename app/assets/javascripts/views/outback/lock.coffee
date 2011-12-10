@@ -1,6 +1,7 @@
 class LockView extends OutbackView
   constructor: ->
     super
+    @page = 'lock'
     @template = _.template('''
     <form action="#unlock" method="post">
       <p>Lock Outback to secure your caseload data</p>

@@ -3,6 +3,7 @@ class SyncView extends OutbackView
 
   constructor: ->
     super
+    @page = 'sync'
     @testIfOnline()
     @bindForAuthEvents()
     @template = _.template('''

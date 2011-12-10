@@ -18,22 +18,23 @@ class OutbackController extends Backbone.Controller
   home : ->
     @_views['home'] = new HomeView
   secure: ->
-    @_views['secure'] = new SecureView
+    @_views['secure'] ||= new SecureView
   unlock: ->
-    @_views['unlock'] = new UnlockView
+    @_views['unlock'] ||= new UnlockView
   lock: ->
-    @_views['lock'] = new LockView
+    @_views['lock'] ||= new LockView
   sync : ->
     @_views['sync'] = new SyncView
   login : ->
     @_views['login'] = new LoginView
   caseload : ->
-    @_views['caseload'] = new CaseloadView
+    @_views['caseload'] ||= new CaseloadView
+    @_views['caseload'].render()
   client : (id) ->
     @_views['client'] = new ClientView(Clients.get(id))
   contacts : (id) ->
     @_views['contacts'] = new ContactFormView(Clients.get(id))
   reset : (id) ->
-    @_views['reset'] = new ResetView
+    @_views['reset'] ||= new ResetView
 
 this.outbackController = new OutbackController

@@ -9,6 +9,7 @@
     function UnlockView() {
       var _this = this;
       UnlockView.__super__.constructor.apply(this, arguments);
+      this.page = 'unlock';
       Users.bind('outback:unlock:success', function() {
         _this.announce('Unlocked');
         return _this.redirectTo('home');

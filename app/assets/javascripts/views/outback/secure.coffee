@@ -1,6 +1,7 @@
 class SecureView extends OutbackView
   constructor: ->
     super
+    @page = 'secure'
     Users.bind 'outback:unlock:failure', =>
       $.mobile.pageLoading(true)
       @announce('The password is not correct. Please try again or reset your password')

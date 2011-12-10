@@ -8,6 +8,7 @@
 
     function SyncView() {
       this.render = __bind(this.render, this);      SyncView.__super__.constructor.apply(this, arguments);
+      this.page = 'sync';
       this.testIfOnline();
       this.bindForAuthEvents();
       this.template = _.template('<% if (Users.currentUser && Users.currentUser.syncing){ %>\n  <a data-role="button" data-theme="b" id="#cancel">Cancel Sync</a>\n<% }else{ %>\n  <% if (!this.onlineStatusKnown){ %>\n    <ul id="sync-status" data-role="listview">\n      <li>Testing if online...<span class="ui-icon status loading"></span></li>\n    </ul>\n  <% }else{ %>\n    <% if (!this.online){ %>\n      <p id="offline_warning"><strong>You do not appear to be online! If you are sure you are, you can attempt to start syncing.</strong></p>\n    <% } %>\n    <a href="#login" data-rel="dialog" data-transition="flip" data-role="button" data-icon="refresh">Start Sync</a>\n  <% }%>\n<% }%>\n\n<% if (Users.currentUser && Users.currentUser.lastSyncStarted){ %>\n  <ul id="sync-status" data-role="listview">\n    <li id="sync_step_authenticate">Authenticate with Bridge <span id="error-info"></span><span class="ui-icon status complete"></span></li>\n    <li id="sync_step_caseload">Sync Caseload<span class="ui-icon status <%= Users.currentUser.lastSync ? \'complete\' : \'loading\'%>"></span></li>\n    <% if (Users.currentUser && Users.currentUser.lastSyncStatus){ %>\n    <li>Last sync successfully completed <abbrev class="timeago" title="<%=this.isoDate(Users.currentUser.lastSync)%>"></abbrev</li>\n    <% } %>\n  </ul>\n<% } %>');

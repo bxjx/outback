@@ -7,16 +7,25 @@
     __extends(CaseloadView, OutbackView);
 
     function CaseloadView() {
-      this.render = __bind(this.render, this);      CaseloadView.__super__.constructor.apply(this, arguments);
+      this.render = __bind(this.render, this);
+      var _this = this;
+      CaseloadView.__super__.constructor.apply(this, arguments);
+      this.page = 'caseload';
+      this.cached_html = null;
+      Clients.bind('clients:synced', function() {
+        return _this.cached_html = null;
+      });
       this.template = _.template('<ul data-role="listview" data-filter="true">\n      <% clients.each(function(client){ %>\n	<li><a href="#client-<%=client.id %>"><%=client.get(\'first_name\') + " " + client.get(\'last_name\') %></a></li>\n      <% }); %>\n    </ul>');
-      this.render();
     }
 
     CaseloadView.prototype.render = function() {
       this.el = this.activePage();
-      this.el.find('.ui-content').html(this.template({
-        clients: Clients
-      }));
+      if (!this.cached_html) {
+        this.cached_html = this.template({
+          clients: Clients
+        });
+        this.el.find('.ui-content').html(this.cached_html);
+      }
       return this.reapplyStyles(this.el);
     };
 
