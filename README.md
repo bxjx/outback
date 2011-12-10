@@ -14,15 +14,8 @@ written in coffeescript using backbone. Testing is done with jasmine.
 Email info@jnsolutions.com.au If you're interested in helping
 out with the project. We're always looking for talented programmers.
 
-### Todo this release:
-
-* handle 500s and 404 on sync
-* better test for not being online
-
 ### General todo:
 
 * handle 500 on caseload
-* add web worker for import
-* add delete data
-* add confirmation that they are deleteing the local data
 * add modernizer for testing support
+* sort by client name

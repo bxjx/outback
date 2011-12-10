@@ -63,7 +63,6 @@
           var chainedSaves, models;
           models = _this.models;
           _this.sync = Backbone.localSync;
-          window.syncer = _this.sync;
           _this.sync.queueSaves(Clients);
           chainedSaves = _this.map(function(model) {
             return function(callback) {

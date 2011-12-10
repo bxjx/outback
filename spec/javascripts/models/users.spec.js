@@ -13,7 +13,6 @@
               Users.testIfOnline()
       
             it "should emit outback:offline", ->
-              console.log(@offlineTriggered)
               expect(@offlineTriggered).toBeTruthy()
       */      describe("and /api/v1/users/ping returns with an error response", function() {
         beforeEach(function() {

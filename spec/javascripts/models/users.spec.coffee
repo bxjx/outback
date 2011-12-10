@@ -15,7 +15,6 @@ describe "Users collection", ->
         Users.testIfOnline()
 
       it "should emit outback:offline", ->
-        console.log(@offlineTriggered)
         expect(@offlineTriggered).toBeTruthy()
     ###
 

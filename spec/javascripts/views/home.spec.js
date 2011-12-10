@@ -27,7 +27,7 @@
         return expect($(this.view.el).find('a[href=#unlock]').length).toEqual(1);
       });
       it("should display the reset link", function() {
-        return expect($(this.view.el).find('a[href=#secure]').length).toEqual(1);
+        return expect($(this.view.el).find('a[href=#reset]').length).toEqual(1);
       });
       return it("should interact with the Users collection as expected", function() {
         return this.mock.verify();
@@ -43,6 +43,9 @@
       });
       it("should display the lock link", function() {
         return expect($(this.view.el).find('a[href=#lock]').length).toEqual(1);
+      });
+      it("should display the reset link", function() {
+        return expect($(this.view.el).find('a[href=#reset]').length).toEqual(1);
       });
       it("should display the caseload link", function() {
         return expect($(this.view.el).find('a[href=#caseload]').length).toEqual(1);

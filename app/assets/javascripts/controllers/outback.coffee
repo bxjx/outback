@@ -9,6 +9,7 @@ class OutbackController extends Backbone.Controller
     "caseload"  : "caseload"
     "client-:id&ui-state=dialog"  : "contacts"
     "client-:id"  : "client"
+    "reset"  : "reset"
   constructor: ->
     super
     @_views = {}
@@ -32,5 +33,7 @@ class OutbackController extends Backbone.Controller
     @_views['client'] = new ClientView(Clients.get(id))
   contacts : (id) ->
     @_views['contacts'] = new ContactFormView(Clients.get(id))
+  reset : (id) ->
+    @_views['reset'] = new ResetView
 
 this.outbackController = new OutbackController

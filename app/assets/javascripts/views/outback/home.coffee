@@ -9,11 +9,12 @@ class HomeView extends OutbackView
       <% if (Users.unlocked()){ %>
         <li><a href="#sync">Sync with Bridge</a></li>
         <li><a href="#lock">Lock</a></li>
+        <li><a href="#reset">Reset</a></li>
         <li data-role="list-divider">Caseload</li>
         <li><a href="#caseload">Caseload</a></li>
       <% }else if (Users.secured()){ %>
         <li><a href="#unlock">Unlock</a></li>
-        <li><a href="#secure">Reset Password</a></li>
+        <li><a href="#reset">Reset</a></li>
       <% }else{ %>
         <li><a href="#secure">Create password</a></li>
       <% } %>

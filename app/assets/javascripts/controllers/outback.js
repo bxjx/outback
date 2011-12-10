@@ -15,7 +15,8 @@
       "sync": "sync",
       "caseload": "caseload",
       "client-:id&ui-state=dialog": "contacts",
-      "client-:id": "client"
+      "client-:id": "client",
+      "reset": "reset"
     };
 
     function OutbackController() {
@@ -61,6 +62,10 @@
 
     OutbackController.prototype.contacts = function(id) {
       return this._views['contacts'] = new ContactFormView(Clients.get(id));
+    };
+
+    OutbackController.prototype.reset = function(id) {
+      return this._views['reset'] = new ResetView;
     };
 
     return OutbackController;

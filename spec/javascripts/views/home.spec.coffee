@@ -28,7 +28,7 @@ describe "HomeView", ->
       expect($(@view.el).find('a[href=#unlock]').length).toEqual(1)
 
     it "should display the reset link", ->
-      expect($(@view.el).find('a[href=#secure]').length).toEqual(1)
+      expect($(@view.el).find('a[href=#reset]').length).toEqual(1)
 
     it "should interact with the Users collection as expected", ->
       @mock.verify()
@@ -44,6 +44,9 @@ describe "HomeView", ->
 
     it "should display the lock link", ->
       expect($(@view.el).find('a[href=#lock]').length).toEqual(1)
+
+    it "should display the reset link", ->
+      expect($(@view.el).find('a[href=#reset]').length).toEqual(1)
 
     it "should display the caseload link", ->
       expect($(@view.el).find('a[href=#caseload]').length).toEqual(1)

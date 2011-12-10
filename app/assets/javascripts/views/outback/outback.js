@@ -63,6 +63,10 @@
       return "" + (d.getUTCFullYear()) + "-" + (pad(d.getUTCMonth() + 1)) + "-" + (pad(d.getUTCDate())) + "T" + (pad(d.getUTCHours())) + ":" + (pad(d.getUTCMinutes())) + ":" + (pad(d.getUTCSeconds())) + "Z";
     };
 
+    OutbackView.prototype.restart = function() {
+      return window.location = window.location.href.replace(/#.*/, '');
+    };
+
     return OutbackView;
 
   })();

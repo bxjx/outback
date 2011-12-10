@@ -112,6 +112,15 @@
       return this.checkAutoLock();
     };
 
+    UserCollection.prototype.erase = function() {
+      localStorage.removeItem('challenge', null);
+      localStorage.removeItem('clients', null);
+      this.clearTimer();
+      this.locked = true;
+      Clients.localStorage = null;
+      return this.trigger('outback:reset');
+    };
+
     UserCollection.prototype.logActivity = function() {
       return this.activity = new Date().getTime();
     };

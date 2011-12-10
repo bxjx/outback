@@ -80,6 +80,15 @@ class UserCollection extends Backbone.Collection
     @logActivity()
     @checkAutoLock()
 
+  # Destroy all locally stored data and emit outback:reset
+  erase: ->
+    localStorage.removeItem('challenge', null)
+    localStorage.removeItem('clients', null)
+    @clearTimer()
+    @locked = true
+    Clients.localStorage = null
+    @trigger('outback:reset')
+
   # Update a record of the last activity of the user
   logActivity: ->
     @activity = new Date().getTime()

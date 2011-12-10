@@ -34,7 +34,6 @@ class ClientCollection extends Backbone.Collection
       success: =>
         models = @models
         @sync = Backbone.localSync
-        window.syncer = @sync
         @sync.queueSaves(Clients)
         chainedSaves =  @map (model) ->
           # return a callback to be used by parallel
