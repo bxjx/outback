@@ -35,7 +35,7 @@ class ClientView extends OutbackView
         <% if (contact.user_name){ %>
           <%=contact.user_name%>: 
         <% } %>
-        <%=contact.notes%>
+        <%=_.escape(contact.notes)%>
         </li>
         <% }); %>
       </ul>
