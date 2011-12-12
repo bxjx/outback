@@ -19,7 +19,11 @@
     };
 
     OutbackView.prototype.activePage = function() {
-      return $("#" + this.page);
+      if (this.page) {
+        return $("#" + this.page);
+      } else {
+        return $(".ui-page-active");
+      }
     };
 
     OutbackView.prototype.reapplyStyles = function(el) {

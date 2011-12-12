@@ -11,7 +11,10 @@ class OutbackView extends Backbone.View
  
   # the current page
   activePage: ->
-    $("##{@page}")
+    if @page
+      $("##{@page}")
+    else
+      $(".ui-page-active")
 
   # Reapply the jquery mobile behaviours to the newly created page
   reapplyStyles: (el) ->
