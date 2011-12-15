@@ -22,6 +22,51 @@ class ClientView extends OutbackView
     </div>
     </div>
 		<div data-role="collapsible">
+    <h3>EPP</h3>
+    <div class="ui-grid-a">
+    <div class="ui-block-a"><strong>Last signed:</strong> 12/12/2011 3:13pm</div>
+    <div class="ui-block-b"><strong>Unsaved changes:</strong> yes</div>
+    </div>
+    <ul data-theme="c" data-role="listview" data-inset="true">
+      <li data-theme="c" data-role="list-divider">Activties</li>
+      <li>
+        <a href="#activity">
+        <p><strong>EM53 - Part-time or Casual Work (Employment)</strong></p>
+        <p>I agree to undertake 30 hours per fortnight of work from 5/12/2011 to 3/12/2012 and will report my earnings to Centrelink.</p>
+        </a>
+      </li>
+    </ul>
+    <ul data-role="listview" data-inset="true">
+      <li data-role="list-divider" data-theme="c" >Assistances</li>
+      <li>
+        <a href="#assistance">
+        <p><strong>AS13  Wage Subsidy Assistance</strong></p>
+        <p>Offer wage incentives for ongoing sustainable employment</p>
+        </a>
+      </li>
+    </ul>
+    <ul data-role="listview" data-inset="true">
+      <li data-theme="c" data-role="list-divider" >Barriers</li>
+      <li><p>None</p></li>
+    </ul>
+
+    <div class="ui-grid-a">
+    <div class="ui-block-a">
+    <a href="#new_activity" data-role="button">Add Activity, Assitance or Barrier</a>
+    </div>
+    <div class="ui-block-b">
+    <a href="#reset_epp" data-role="button">Reset</a>
+    </div>
+    <div class="ui-block-a">
+    <a href="#print_epp" data-role="button">Print</a>
+    </div>
+    <div class="ui-block-b">
+    <a href="#approve_epp" data-role="button">Mark as Signed</a>
+    </div>
+    </div>
+
+    </div>
+		<div data-role="collapsible">
     <h3>Contacts</h3>
       <a href="#clients-<%=client.id%>" data-rel="dialog" data-transition="flip" data-role="button">New Contact</a>
       <ul data-role="listview" data-inset="true">

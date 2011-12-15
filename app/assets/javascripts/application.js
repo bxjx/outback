@@ -5,6 +5,7 @@
 // the compiled file.
 //
 //= require jquery
+//= require modernizr.custom.31520
 //= require underscore-min
 //= require jquery.timeago
 //= require async

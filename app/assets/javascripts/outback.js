@@ -1,6 +1,8 @@
 
   $(document).ready(function() {
-    if (window.location.href.match(/#/)) {
+    if (!Modernizr.applicationcache && !Modernizr.localstorage) {
+      return $('#inadequate_browser').show();
+    } else if (window.location.href.match(/#/)) {
       return window.location = '/';
     } else {
       $.mobile.pageLoading();

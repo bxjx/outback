@@ -33,8 +33,10 @@
 
 # Load the clients from localstore and start the app
 $(document).ready ->
-  # jQuery mobile doesn't really handle deep linking too well
-  if window.location.href.match(/#/)
+  if not Modernizr.applicationcache and not Modernizr.localstorage
+    $('#inadequate_browser').show()
+  else if window.location.href.match(/#/)
+    # jQuery mobile doesn't really handle deep linking too well
     window.location = '/'
   else
     $.mobile.pageLoading()

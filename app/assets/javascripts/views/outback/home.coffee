@@ -19,6 +19,7 @@ class HomeView extends OutbackView
       <% }else{ %>
         <li><a href="#secure">Create password</a></li>
       <% } %>
+      <li><a href="#help">Help</a></li>
     </ul>
     ''')
     @render()
