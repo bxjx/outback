@@ -7,6 +7,7 @@ class ClientView extends OutbackView
     client.bind 'change', (changed_client) =>
       @render(changed_client)
     @template = _.template('''
+    <% var _view = this; %>
     <h2><%=client.get('first_name') + ' ' + client.get('last_name') %> (<%=client.get('jsid')%>)</h2>
     <div class="ui-grid-a">
     <div class="ui-block-a"><strong>Mobile:</strong> <a href="tel:<%=client.get('phone_home')%>"><%=client.get('phone_home')%></a></div>
@@ -23,54 +24,76 @@ class ClientView extends OutbackView
     </div>
 		<div data-role="collapsible">
     <h3>EPP</h3>
-    <div class="ui-grid-a">
-    <div class="ui-block-a"><strong>Last signed:</strong> 12/12/2011 3:13pm</div>
-    <div class="ui-block-b"><strong>Unsaved changes:</strong> yes</div>
-    </div>
-    <ul data-theme="c" data-role="listview" data-inset="true">
-      <li data-theme="c" data-role="list-divider">Activties</li>
-      <li>
-        <a href="#activity">
-        <p><strong>EM53 - Part-time or Casual Work (Employment)</strong></p>
-        <p>I agree to undertake 30 hours per fortnight of work from 5/12/2011 to 3/12/2012 and will report my earnings to Centrelink.</p>
-        </a>
-      </li>
-    </ul>
-    <ul data-role="listview" data-inset="true">
-      <li data-role="list-divider" data-theme="c" >Assistances</li>
-      <li>
-        <a href="#assistance">
-        <p><strong>AS13  Wage Subsidy Assistance</strong></p>
-        <p>Offer wage incentives for ongoing sustainable employment</p>
-        </a>
-      </li>
-    </ul>
-    <ul data-role="listview" data-inset="true">
-      <li data-theme="c" data-role="list-divider" >Barriers</li>
-      <li><p>None</p></li>
-    </ul>
 
-    <div class="ui-grid-a">
-    <div class="ui-block-a">
-    <a href="#new_activity" data-role="button">Add Activity, Assitance or Barrier</a>
-    </div>
-    <div class="ui-block-b">
-    <a href="#reset_epp" data-role="button">Reset</a>
-    </div>
-    <div class="ui-block-a">
-    <a href="#print_epp" data-role="button">Print</a>
-    </div>
-    <div class="ui-block-b">
-    <a href="#approve_epp" data-role="button">Mark as Signed</a>
-    </div>
-    </div>
+    <% var epp = client.get('epp') %>
+    <% if (epp){ %>
+      <div class="ui-grid-a">
+      <div class="ui-block-a"><strong>Last signed:</strong> <%=epp.signed_on%></div>
+      <div class="ui-block-b"><strong>Work Experience:</strong> <%=epp.work_experience_hours_required ? epp.work_experience_hours + " hours" : 'Not required'%></div>
+      </div>
+
+      <ul data-theme="c" data-role="listview" data-inset="true">
+        <li data-theme="c" data-role="list-divider">Goal</li>
+        <li><p><%=epp.goal ? epp.goal : 'None' %> <%=epp.interpreter ? '(interpreter used)' : ''%></p></li>
+      </ul>
+
+      <ul data-theme="c" data-role="listview" data-inset="true">
+        <li data-theme="c" data-role="list-divider">Activties</li>
+        <% _(epp.activities).each(function(activity){ %>
+          <li>
+            <p><strong><%=_.escape(activity.code)%>: <%=_.escape(activity.name)%> (<%=activity.compulsory ? 'Compulsory' : 'Voluntary'%>)</strong></p>
+            <p><%=_.escape(activity.completed_statement)%></p>
+          </li>
+        <% }); %>
+      </ul>
+
+      <ul data-role="listview" data-inset="true">
+        <li data-role="list-divider" data-theme="c" >Assistances</li>
+        <% _(epp.assistances).each(function(assistance){ %>
+          <li>
+            <p><strong><%=_.escape(assistance.code)%>: <%=_.escape(assistance.name)%></strong></p>
+            <p><%=_.escape(assistance.details)%></p>
+          </li>
+        <% }); %>
+      </ul>
+
+      <ul data-role="listview" data-inset="true">
+        <li data-theme="c" data-role="list-divider" >Barriers</li>
+        <% _(epp.barriers).each(function(barrier){ %>
+          <li>
+            <p><strong><%=_.escape(barrier.code)%>: <%=_.escape(barrier.name)%></strong></p>
+            <p>Status: <em><%=_.escape(barrier.status)%></em></p>
+            <p>Result: <em><%=_.escape(barrier.result)%></em></p>
+            <p><%=_.escape(barrier.result)%></p>
+          </li>
+        <% }); %>
+      </ul>
+
+      <% if (false){ %>
+      <div class="ui-grid-a">
+      <div class="ui-block-a">
+      <a href="#new_activity" data-role="button">Add Activity, Assitance or Barrier</a>
+      </div>
+      <div class="ui-block-b">
+      <a href="#reset_epp" data-role="button">Reset</a>
+      </div>
+      <div class="ui-block-a">
+      <a href="#print_epp" data-role="button">Print</a>
+      </div>
+      <div class="ui-block-b">
+      <a href="#approve_epp" data-role="button">Mark as Signed</a>
+      </div>
+      </div>
+      <% } %>
+    <% }else{ %>
+      <p id="no_epp">No EPP created</p>
+    <% } %>
 
     </div>
 		<div data-role="collapsible">
     <h3>Contacts</h3>
       <a href="#clients-<%=client.id%>" data-rel="dialog" data-transition="flip" data-role="button">New Contact</a>
       <ul data-role="listview" data-inset="true">
-        <% var _view = this; %>
         <% _(client.get('contacts')).each(function(contact){ %>
         <li>
         <% if (!contact.synced){ %>

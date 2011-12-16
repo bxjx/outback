@@ -16,7 +16,14 @@ beforeEach(function() {
         {
           "id": 2,
           "first_name": 'Rupert',
-          "last_name": 'Taylor-Price'
+          "last_name": 'Taylor-Price',
+          "epp": {
+            signed_on: new Date(),
+            interpreter: false,
+            goal: 'some goal',
+            work_experience_hours_required: true,
+            work_experience_hours: 12
+          }
         }
       ]
     }

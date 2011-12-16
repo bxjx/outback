@@ -58,7 +58,7 @@ class Api::V1::ClientsController < ApplicationController
 
   def fake_client(id)
     in_work_experience = [true,false].sample # probably a better way to do this ;)
-    {
+    client = {
       :id => id,
       :first_name => Faker::Name.first_name,
       :last_name => Faker::Name.last_name,
@@ -82,6 +82,49 @@ class Api::V1::ClientsController < ApplicationController
         {:notes => Faker::Lorem.paragraph, :created_at => number.days.ago, :synced => true, :user_name => Faker::Name.name}
       }
     }
+    if id.odd?
+      client[:epp] = {
+        :signed_on => Date.yesterday,
+        :interpreter => false,
+        :goal => Faker::Lorem.paragraph,
+        :work_experience_hours_required => true,
+        :work_experience_hours => 12,
+        :activities => [
+          {
+            :name => 'Compulsory Contact Appointment',
+            :category => 'Some cat',
+            :code => 'AI03',
+            :compulsory => true,
+            :completed_statement => Faker::Lorem.paragraph
+          },
+          {
+            :name => 'Blah Blah',
+            :code => 'JS01',
+            :category => 'Some cat',
+            :compulsory => false,
+            :completed_statement => Faker::Lorem.paragraph
+          },
+        ],
+        :assistances => [
+          {
+            :name => 'Compulsory Contact Appointment',
+            :code => 'Work Related Clothing and Presentation Assistance',
+            :details => Faker::Lorem.paragraph
+          },
+        ],
+        :barriers => [
+          {
+            :name => 'Compulsory Contact Appointment',
+            :category => 'Compulsory',
+            :code => 'Work Related Clothing and Presentation Assistance',
+            :status => "Mild",
+            :result => "Unsure",
+            :additional => Faker::Lorem.paragraph
+          },
+        ]
+      }
+    end
+    client
   end
 end
 
