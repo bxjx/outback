@@ -69,7 +69,7 @@
 
     OutbackView.prototype.restart = function() {
       $('.ui-page').remove();
-      return window.location = '/';
+      if ($('body#outback').length) return window.location = '/';
     };
 
     return OutbackView;

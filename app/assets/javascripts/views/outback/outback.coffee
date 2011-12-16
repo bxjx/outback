@@ -53,6 +53,9 @@ class OutbackView extends Backbone.View
   restart: ->
     # destroy all pages in the dom just in case they use back button
     $('.ui-page').remove()
-    window.location = '/' 
+    if $('body#outback').length
+      # only restart if we're proper environment and not in testing. Hmmm..
+      # i should maybe stub out another method for restart
+      window.location = '/' 
 
 this.OutbackView = OutbackView

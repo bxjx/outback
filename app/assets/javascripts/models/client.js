@@ -31,6 +31,19 @@
       }, callbacks);
     };
 
+    Client.prototype.remove_contact = function(contactUid) {
+      var contacts, index;
+      contacts = this.get('contacts');
+      index = _.pluck(contacts, 'uid').indexOf(contactUid);
+      if (index > -1) {
+        contacts.splice(index, 1);
+        this.save({
+          contacts: contacts
+        });
+        return this.change();
+      }
+    };
+
     return Client;
 
   })();

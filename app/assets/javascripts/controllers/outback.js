@@ -14,6 +14,7 @@
       "sync&ui-state=dialog": "login",
       "sync": "sync",
       "caseload": "caseload",
+      "client-:id-edit-contact-:uid": "editContact",
       "client-:id&ui-state=dialog": "contacts",
       "client-:id": "client",
       "reset": "reset"
@@ -72,6 +73,10 @@
     OutbackController.prototype.reset = function(id) {
       var _base;
       return (_base = this._views)['reset'] || (_base['reset'] = new ResetView);
+    };
+
+    OutbackController.prototype.editContact = function(id, contactUid) {
+      return new EditContact(Clients.get(id), contactUid);
     };
 
     return OutbackController;

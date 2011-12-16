@@ -7,6 +7,7 @@ class OutbackController extends Backbone.Controller
     "sync&ui-state=dialog"  : "login"
     "sync"  : "sync"
     "caseload"  : "caseload"
+    "client-:id-edit-contact-:uid"  : "editContact"
     "client-:id&ui-state=dialog"  : "contacts"
     "client-:id"  : "client"
     "reset"  : "reset"
@@ -36,5 +37,7 @@ class OutbackController extends Backbone.Controller
     @_views['contacts'] = new ContactFormView(Clients.get(id))
   reset : (id) ->
     @_views['reset'] ||= new ResetView
+  editContact : (id, contactUid) ->
+    new EditContact(Clients.get(id), contactUid)
 
 this.outbackController = new OutbackController

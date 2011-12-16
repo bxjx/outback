@@ -73,6 +73,9 @@ class ClientView extends OutbackView
         <% var _view = this; %>
         <% _(client.get('contacts')).each(function(contact){ %>
         <li>
+        <% if (!contact.synced){ %>
+          <a href="#client-<%=client.id%>-edit-contact-<%=contact.uid%>">
+        <% } %>
         <abbrev title="<%=_view.formattedDate(contact.created_at)%>" class="timeago ui-li-aside"></abbrev>
         <% if (!contact.synced){ %>
           <em>(Unsynced)</em>
@@ -81,6 +84,9 @@ class ClientView extends OutbackView
           <%=contact.user_name%>: 
         <% } %>
         <%=_.escape(contact.notes)%>
+        <% if (!contact.synced){ %>
+          </a>
+        <% } %>
         </li>
         <% }); %>
       </ul>

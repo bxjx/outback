@@ -16,6 +16,15 @@ class Client extends Backbone.Model
     contacts.unshift contact_data
     @change() # maybe this shouldn't be used or only on success?
     @save({'contacts': contacts}, callbacks)
+  
+  # Remove a contact that hasn't been synced. Deletion triggers change event. 
+  remove_contact: (contactUid) ->
+    contacts = @get('contacts')
+    index = _.pluck(contacts, 'uid').indexOf(contactUid)
+    if index > -1
+      contacts.splice(index, 1)
+      @save(contacts: contacts)
+      @change()
 
 class ClientCollection extends Backbone.Collection
   # setup local storage of clients
