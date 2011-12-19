@@ -127,7 +127,6 @@ class UserCollection extends Backbone.Collection
   # events depending on the result
   authenticate: (login, password) ->
     $.ajax '/api/v1/users/auth.json',
-      contentType: "application/json; charset=utf-8"
       dataType: "json"
       type: 'POST'
       data: {login, password}
