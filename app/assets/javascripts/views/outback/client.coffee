@@ -64,7 +64,7 @@ class ClientView extends OutbackView
             <p><strong><%=_.escape(barrier.code)%>: <%=_.escape(barrier.name)%></strong></p>
             <p>Status: <em><%=_.escape(barrier.status)%></em></p>
             <p>Result: <em><%=_.escape(barrier.result)%></em></p>
-            <p><%=_.escape(barrier.result)%></p>
+            <p><%=_.escape(barrier.additional)%></p>
           </li>
         <% }); %>
       </ul>
