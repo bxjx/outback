@@ -33,6 +33,9 @@ class OutbackView extends Backbone.View
     else
       $.mobile.changePage page
 
+  redirectToBack: ->
+    window.history.back()
+ 
   # generic dialog
   announce: (message) ->
     $.mobile.pageLoading(true)

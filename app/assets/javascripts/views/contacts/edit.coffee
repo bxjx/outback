@@ -5,7 +5,7 @@ class EditContact extends OutbackView
     @client.bind 'change', (changed_client) =>
       $.mobile.pageLoading(true)
       @announce('Contact deleted')
-      @redirectTo("client-#{changed_client.id}")
+      @redirectToBack()
     @contactUid = contactUid
     @template = _.template('''
     <form action="#delete-contact" method="post">
@@ -26,7 +26,7 @@ class EditContact extends OutbackView
   }
   render: ->
     @el = @activePage()
-    @el.find('h1').html('Edit Contact')
+    @el.find('h1').html('Delete Contact')
     @el.find('.ui-content').html(@template())
     @reapplyStyles(@el)
     @delegateEvents()

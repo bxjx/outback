@@ -13,7 +13,7 @@
       this.client.bind('change', function(changed_client) {
         $.mobile.pageLoading(true);
         _this.announce('Contact deleted');
-        return _this.redirectTo("client-" + changed_client.id);
+        return _this.redirectToBack();
       });
       this.contactUid = contactUid;
       this.template = _.template('<form action="#delete-contact" method="post">\n  <p>Delete an unsynced contact</p>\n  <div class="ui-grid-a">\n  <div class="ui-block-a">\n    <a data-role="button" href="#" data-theme="c" data-rel="back">Cancel</a>\n  </div>\n  <div class="ui-block-b">\n    <button data-theme="b" data-role="button" type="submit" name="submit" value="submit-value">Delete</button>\n  </div>\n  </div>\n</form>');
@@ -26,7 +26,7 @@
 
     EditContact.prototype.render = function() {
       this.el = this.activePage();
-      this.el.find('h1').html('Edit Contact');
+      this.el.find('h1').html('Delete Contact');
       this.el.find('.ui-content').html(this.template());
       this.reapplyStyles(this.el);
       return this.delegateEvents();

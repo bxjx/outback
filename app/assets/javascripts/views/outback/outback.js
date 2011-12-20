@@ -44,6 +44,10 @@
       }
     };
 
+    OutbackView.prototype.redirectToBack = function() {
+      return window.history.back();
+    };
+
     OutbackView.prototype.announce = function(message) {
       $.mobile.pageLoading(true);
       return $("<div class='ui-loader ui-overlay-shadow ui-body-e ui-corner-all'><h1>" + message + "</h1></div>").css({
