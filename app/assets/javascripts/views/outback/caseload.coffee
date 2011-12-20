@@ -8,7 +8,7 @@ class CaseloadView extends OutbackView
     @template = _.template('''
 		<ul data-role="listview" data-filter="true">
       <% clients.each(function(client){ %>
-			<li><a href="#client-<%=client.id %>"><%=client.get('first_name') + " " + client.get('last_name') %></a></li>
+			<li><a href="#client-<%=client.id %>"><%=_.escape(client.get('first_name')) + " " + _.escape(client.get('last_name')) %> - <%=client.get('jsid')%></a></li>
       <% }); %>
     </ul>
     ''')

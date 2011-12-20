@@ -15,7 +15,7 @@
       Clients.bind('clients:synced', function() {
         return _this.cached_html = null;
       });
-      this.template = _.template('<ul data-role="listview" data-filter="true">\n      <% clients.each(function(client){ %>\n	<li><a href="#client-<%=client.id %>"><%=client.get(\'first_name\') + " " + client.get(\'last_name\') %></a></li>\n      <% }); %>\n    </ul>');
+      this.template = _.template('<ul data-role="listview" data-filter="true">\n      <% clients.each(function(client){ %>\n	<li><a href="#client-<%=client.id %>"><%=_.escape(client.get(\'first_name\')) + " " + _.escape(client.get(\'last_name\')) %> - <%=client.get(\'jsid\')%></a></li>\n      <% }); %>\n    </ul>');
     }
 
     CaseloadView.prototype.render = function() {
