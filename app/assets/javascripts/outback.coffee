@@ -33,7 +33,10 @@
 
 # Load the clients from localstore and start the app
 $(document).ready ->
-  if not Modernizr.applicationcache and not Modernizr.localstorage
+  # hmm.. old firefox doesn't like jQueryMobile. not sure why so just boring
+  # old version test
+  old_firefox = $.browser.mozilla and parseFloat($.browser.version) < 6
+  if old_firefox or not Modernizr.applicationcache or not Modernizr.localstorage
     $('#inadequate_browser').show()
   else if window.location.href.match(/#/)
     # jQuery mobile doesn't really handle deep linking too well
