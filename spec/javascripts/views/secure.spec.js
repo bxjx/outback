@@ -1,4 +1,4 @@
-
+(function() {
   describe("SecureView", function() {
     beforeEach(function() {
       this.mock = sinon.mock(Users);
@@ -14,3 +14,4 @@
       });
     });
   });
+}).call(this);

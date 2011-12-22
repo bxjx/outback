@@ -13,7 +13,6 @@ gem 'haml'
 gem "sqlite3"
 
 gem 'jquery-rails'
-gem 'jasmine'
 gem 'uglifier'
 
 gem 'capistrano'
@@ -32,6 +31,13 @@ gem 'faker'
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
+end
+
+group :test, :development do
+  gem 'guard'
+  gem 'guard-coffeescript'
+  gem 'guard-livereload'
+  gem 'jasmine'
 end
 
 group :production do

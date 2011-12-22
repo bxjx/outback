@@ -1,4 +1,4 @@
-
+(function() {
   $(document).ready(function() {
     var old_firefox;
     old_firefox = $.browser.mozilla && parseFloat($.browser.version) < 6;
@@ -19,3 +19,4 @@
       });
     }
   });
+}).call(this);

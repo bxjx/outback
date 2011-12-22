@@ -23,10 +23,10 @@ src_files:
   - vendor/assets/javascripts/jquery.jcryption.js
   - vendor/assets/javascripts/backbone-cryptstorage.js
   - vendor/assets/javascripts/meninges-model.js
-  - app/assets/javascripts/models/**/*.js
-  - app/assets/javascripts/views/outback/outback.js
-  - app/assets/javascripts/views/**/*.js
-  - app/assets/javascripts/controllers/**/*.js
+  - spec/javascripts/compiled/models/**/*.js
+  - spec/javascripts/compiled/views/outback/outback.js
+  - spec/javascripts/compiled/views/**/*.js
+  - spec/javascripts/compiled/controllers/**/*.js
   - spec/javascripts/fixtures/*.fixture.js
   - spec/javascripts/templates/*.js
 

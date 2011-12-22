@@ -1,4 +1,4 @@
-
+(function() {
   describe("Clients collection", function() {
     return describe("When synchronising caseload with bridge with a valid token and no existing clients", function() {
       beforeEach(function() {
@@ -49,3 +49,4 @@
       });
     });
   });
+}).call(this);

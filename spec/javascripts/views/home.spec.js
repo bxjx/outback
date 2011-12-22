@@ -1,4 +1,4 @@
-
+(function() {
   describe("HomeView", function() {
     beforeEach(function() {
       this.mock = sinon.mock(Users);
@@ -73,3 +73,4 @@
       return $('.ui-page-active').remove();
     });
   });
+}).call(this);

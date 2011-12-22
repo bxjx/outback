@@ -1,4 +1,4 @@
-
+(function() {
   describe("SecureView", function() {
     beforeEach(function() {
       this.users = sinon.mock(Users);
@@ -30,3 +30,4 @@
       return $('.ui-page-active').remove();
     });
   });
+}).call(this);
